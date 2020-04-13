@@ -1,3 +1,4 @@
+import { InventarioComponent } from './components/inventario/inventario.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app/app.routing.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     AppComponent,
     LoginComponent,
+    InventarioComponent
 
   ],
   imports: [
