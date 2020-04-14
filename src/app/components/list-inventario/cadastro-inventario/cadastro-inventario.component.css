@@ -1,0 +1,29 @@
+mat-form-field {
+    margin-right: 12px;
+  }
+  
+  mat-select {
+  margin-right: 12px;
+  }
+  
+  button {
+  margin-right: 12px;
+  }
+  
+  body {
+    background-color: #eaeaea;
+  }
+
+  .error {
+    padding: 16px;
+    width: 300px;
+    color: white;
+    background-color: red;
+  }
+
+  .sucess {
+    padding: 16px;
+    width: 300px;
+    color: white;
+    background-color: cadetblue;
+  }
