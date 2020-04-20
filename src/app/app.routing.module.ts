@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListInventarioComponent } from './components/list-inventario/list-inventario.component';
 import { CadastroInventarioComponent } from './components/list-inventario/cadastro-inventario/cadastro-inventario.component';
+import { ImportItemComponent } from './components/import-item/import-item.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'lancamento',
     component: LancamentoComponent,
+  },
+  {
+    path: 'import',
+    component: ImportItemComponent,
   },
 ];
 

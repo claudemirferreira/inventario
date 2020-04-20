@@ -10,13 +10,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListInventarioComponent } from './components/list-inventario/list-inventario.component';
 import { CadastroInventarioComponent } from './components/list-inventario/cadastro-inventario/cadastro-inventario.component';
+import { ImportItemComponent } from './components/import-item/import-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ListInventarioComponent,
-    CadastroInventarioComponent
+    CadastroInventarioComponent,
+    ImportItemComponent
 
   ],
   imports: [
