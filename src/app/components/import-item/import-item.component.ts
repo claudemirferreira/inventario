@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { ResponseApi } from 'src/app/model/response-api';
 import { ItemDto } from 'src/app/model/item-dto';
+import { ImportService } from 'src/app/services/import.service';
 
 type AOA = any[][];
 
@@ -12,14 +13,13 @@ type AOA = any[][];
 })
 export class ImportItemComponent implements OnInit {
 
-  name = 'This is XLSX TO JSON CONVERTER';
   willDownload = false;
 
   list: ItemDto[];
 
   displayedColumns: string[] = ['codigo', 'nome', 'unidade', 'endereco', 'boleto', 'quantidade'];
 
-  constructor() { }
+  constructor(private service: ImportService) { }
 
   ngOnInit(){
   }
@@ -41,7 +41,15 @@ export class ImportItemComponent implements OnInit {
       let responseApi: ResponseApi;
       responseApi= jsonData;
       this.list = responseApi['Sheet1'];
-      console.log(this.list);
+
+      this.service.saveAll(this.list).subscribe(
+        (list: ItemDto[]) => {
+          this.list = list;
+        },
+        (err) => {
+          console.log('ERROR =' + err);
+        }
+      );
       const dataString = JSON.stringify(jsonData);
       document.getElementById('output').innerHTML = dataString.slice(0, 300).concat("...");
       this.setDownload(dataString);
