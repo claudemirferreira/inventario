@@ -7,6 +7,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ListInventarioComponent } from './components/list-inventario/list-inventario.component';
 import { CadastroInventarioComponent } from './components/list-inventario/cadastro-inventario/cadastro-inventario.component';
 import { ImportItemComponent } from './components/import-item/import-item.component';
+import { ConfigurationComponent } from './components/configuration/configuration.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,14 @@ const routes: Routes = [
     path: 'import',
     component: ImportItemComponent,
   },
+  {
+    path: 'configuration',
+    component: ConfigurationComponent,
+  },
+
+
+
+  
 ];
 
 @NgModule({
