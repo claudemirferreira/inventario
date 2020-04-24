@@ -1,1 +1,44 @@
-<p>execucao works!</p>
+<div class="mat-app-background basic-container">
+
+    <mat-card class="example-card">
+        <mat-card-header>
+            <mat-card-title>FORMULARIO DE EXECUÇÃO DE INVENTÁRIO</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+            <mat-form-field>
+                <mat-label>Inventario</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let inventario of listInventario" [value]="inventario.id">
+                        {{inventario.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Status</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let status of listStatus" [value]="status.id">
+                        {{status.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </mat-card-content>
+        <mat-card-actions>
+
+            <button mat-raised-button>
+                <i class="material-icons">undo</i>Voltar</button>
+
+            <button mat-raised-button (click)="findAll()">
+                <i class="material-icons">search</i>Pesquisar</button>
+
+            <button mat-raised-button routerLink="/cadastro-inventario" [disabled]="list">
+                <i class="material-icons">add_circle_outline</i>Novo</button>
+
+        </mat-card-actions>
+    </mat-card>
+
+
+
+</div>
