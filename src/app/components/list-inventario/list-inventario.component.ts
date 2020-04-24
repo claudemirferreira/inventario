@@ -55,8 +55,8 @@ export class ListInventarioComponent implements OnInit {
         this.findAll();
         this.openSnackBar( 'Operação realizada com sucesso', 'OK');
       } else
-      this.openSnackBar( 'Error: Entre em contato com o suporte', 'OK');
-      console.log(err);
+        this.openSnackBar( 'Error: Entre em contato com o suporte', 'OK');
+        console.log(err);
     });
   }
 
