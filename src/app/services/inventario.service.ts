@@ -22,5 +22,9 @@ export class InventarioService {
     return this.http.get(`${INVENTARIO_API}/inventario/`+id);
   }
 
+  delete(id: number) {
+    return this.http.delete(`${INVENTARIO_API}/inventario/`+id);
+  }
+
 
 }

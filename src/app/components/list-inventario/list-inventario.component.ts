@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Inventario } from 'src/app/model/inventario';
 import { InventarioService } from 'src/app/services/inventario.service';
-import { MatProgressButtonOptions } from 'mat-progress-buttons';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list-inventario',
@@ -12,26 +12,8 @@ export class ListInventarioComponent implements OnInit {
 
   public objeto: Inventario;
   public list: Inventario[];
-  
-  @Input() message: string | null;
 
-  //
-  barButtonOptions: MatProgressButtonOptions = {
-    active: false,
-    text: 'Shearch...',
-    spinnerSize: 15,
-    raised: true,
-    fab: true,
-    stroked: false,
-    buttonColor: 'primary',
-    spinnerColor: 'accent',
-    fullWidth: false,
-    disabled: false,
-    mode: 'indeterminate',
-    icon: {
-      fontIcon: 'fas fa-search',
-    },
-  };
+  @Input() message: string | null;
 
   displayedColumns: string[] = [
     'id',
@@ -41,8 +23,9 @@ export class ListInventarioComponent implements OnInit {
     'acao',
   ];
 
-  constructor(private service: InventarioService) {
-    
+  constructor(private service: InventarioService
+    ,private _snackBar: MatSnackBar) {
+
   }
 
   ngOnInit(): void {
@@ -51,56 +34,36 @@ export class ListInventarioComponent implements OnInit {
   }
 
   findAll(): void {
-
-    //this.list = Inventario [];
-    this.barButtonOptions.active = true;
-    this.barButtonOptions.text = 'shearching...';
     setTimeout(() => {
       this.service.findAll().subscribe(
         (list: Inventario[]) => {
           this.list = list;
-          console.log(JSON.stringify(this.list));
         },
         (err) => {
           console.log('ERROR =' + err);
         }
       );
-
-      this.barButtonOptions.active = false;
-      this.barButtonOptions.text = 'Search';
     }, 3000);
   }
 
-  find() {
-    /*
-    this.message ='';
-    this.service.pesquisar(this.usuario).subscribe((responseApi: ResponseApi) => {
-      this.list = responseApi['data'];
-      if (this.list.length == 0)
-        this.message = 'Nenhum registro encontrado.';
+  delete(inventario: Inventario) {
+    this.service.delete(inventario.id).subscribe((responseApi: any) => {
+      console.log(responseApi);
+
     }, err => {
-      this.showMessage({
-        type: 'error',
-        text: err['error']['errors'][0]
-      });
+      if (err.status == '200') {
+        this.findAll();
+        this.openSnackBar( 'Operação realizada com sucesso', 'OK');
+      } else
+      this.openSnackBar( 'Error: Entre em contato com o suporte', 'OK');
+      console.log(err);
     });
-    */
   }
 
-  delete(inventario: Inventario) {
-    /*
-    return this.service.delete(user.id)
-      .subscribe(() => {
-        console.log('saved');
-        this.find();
-      }, 
-        error => {
-          alert('Ocoreu um erro, entre em contato com o suporte');
-          console.log(JSON.stringify(error));
-        }
-      
-      );
-      */
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
 }

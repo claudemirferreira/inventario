@@ -14,12 +14,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatNativeDateModule } from '@angular/material/core';
-<<<<<<< HEAD
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatStepperModule}  from '@angular/material/stepper';
-=======
+import { MatStepperModule }  from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
->>>>>>> origin/master
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -36,12 +34,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatTableModule,
     MatProgressButtonsModule,
     MatCheckboxModule,
-<<<<<<< HEAD
     MatTabsModule,
     MatStepperModule,
-=======
     MatSelectModule,
->>>>>>> origin/master
+    MatSnackBarModule,
 
   ],
   exports: [
@@ -59,13 +55,11 @@ import { MatSelectModule } from '@angular/material/select';
     MatTableModule,
     MatProgressButtonsModule,
     MatCheckboxModule,
-<<<<<<< HEAD
     MatTabsModule,
     MatStepperModule,
-=======
     MatSelectModule,
+    MatSnackBarModule,
 
->>>>>>> origin/master
   ],
 })
 

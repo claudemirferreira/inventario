@@ -18,10 +18,10 @@
             <button mat-raised-button>
                 <i class="material-icons">undo</i>Voltar</button>
 
-            <button mat-raised-button (click)="find()">
+            <button mat-raised-button (click)="findAll()">
                 <i class="material-icons">search</i>Pesquisar</button>
 
-            <button mat-raised-button routerLink="/cadastro-inventario">
+            <button mat-raised-button routerLink="/cadastro-inventario" [disabled]="list" >
                 <i class="material-icons">add_circle_outline</i>Novo</button>
 
         </mat-card-actions>

@@ -12,6 +12,7 @@ import { ListInventarioComponent } from './components/list-inventario/list-inven
 import { CadastroInventarioComponent } from './components/list-inventario/cadastro-inventario/cadastro-inventario.component';
 import { ImportItemComponent } from './components/import-item/import-item.component';
 import { ConfigurationComponent } from './components/configuration/configuration.component';
+import { ExecucaoComponent } from './components/execucao/execucao.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ConfigurationComponent } from './components/configuration/configuration
     CadastroInventarioComponent,
     ImportItemComponent,
     ConfigurationComponent,
+    ExecucaoComponent,
 
   ],
   imports: [
