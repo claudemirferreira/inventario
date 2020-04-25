@@ -1,57 +1,43 @@
-<mat-card class="example-card">
-    <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Importação de itens do inventário</mat-card-title>
-        <mat-card-subtitle>Selecione o arquivo excel</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <input type="file" (change)="onFileChange($event)"/>
-    </mat-card-content>
-</mat-card>
+<mat-tab-group>
+    <mat-tab label="Importação do arquivo XLS">
+
+        <mat-card class="example-card">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Importação de itens do inventário</mat-card-title>
+                <mat-card-subtitle>Selecione o arquivo excel para importar os dados</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <input type="file" (change)="onFileChange($event)" />
+            </mat-card-content>
+
+        </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Importação dos itens"> 
+        <mat-card class="example-card">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Importação de itens do inventário</mat-card-title>
+                <mat-card-subtitle>Clique no botão Importar itens para incluir os itens no banco de dados</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-actions>
+
+                <button mat-raised-button (click)="importItens()">
+                    <i class="material-icons">get_app</i>Importar itens</button>
+
+            </mat-card-actions>
+
+        </mat-card>
+
+
+    </mat-tab>
+</mat-tab-group>
 
 <mat-divider></mat-divider>
 
-<table mat-table [dataSource]="list" class="mat-elevation-z8">
-    <ng-container matColumnDef="codigo">
-        <th mat-header-cell *matHeaderCellDef> Código </th>
-        <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
-    </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="nome">
-        <th mat-header-cell *matHeaderCellDef> Nome </th>
-        <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="unidade">
-        <th mat-header-cell *matHeaderCellDef> Unidade </th>
-        <td mat-cell *matCellDef="let element"> {{element.unidade}} </td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="endereco">
-        <th mat-header-cell *matHeaderCellDef> Endereço </th>
-        <td mat-cell *matCellDef="let element"> {{element.endereco}} </td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="boleto">
-        <th mat-header-cell *matHeaderCellDef> Boleto </th>
-        <td mat-cell *matCellDef="let element"> {{element.boleto}} </td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="quantidade">
-        <th mat-header-cell *matHeaderCellDef> Quantidade </th>
-        <td mat-cell *matCellDef="let element"> {{element.quantidade}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
-<br>
 <div *ngIf="willDownload">
     <a id="download"> Download JSON File </a>
 </div>

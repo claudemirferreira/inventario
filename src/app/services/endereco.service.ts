@@ -5,11 +5,11 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class ItemService {
+export class EnderecoService {
 
   constructor(private http: HttpClient) { }
 
   import() {
-    return this.http.get(`${INVENTARIO_API}/item`);
+    return this.http.get(`${INVENTARIO_API}/endereco`);
   }
 }
