@@ -8,10 +8,10 @@ export class Execucao {
 
     fim: Date;
 
-    nome: string;
+    status: string;
 
     descricao: string;    
 
     inventario: Inventario;
-    
+
 }
