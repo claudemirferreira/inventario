@@ -13,6 +13,9 @@ import { CadastroInventarioComponent } from './components/list-inventario/cadast
 import { ImportItemComponent } from './components/import-item/import-item.component';
 import { ConfigurationComponent } from './components/configuration/configuration.component';
 import { ExecucaoComponent } from './components/execucao/execucao.component';
+import { ListEmpresaComponent } from './components/list-empresa/list-empresa.component';
+import { CadastroEmpresaComponent } from './components/list-empresa/cadastro-empresa/cadastro-empresa.component';
+import { DialogMensagemComponent } from './components/share/dialog-mensagem/dialog-mensagem.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { ExecucaoComponent } from './components/execucao/execucao.component';
     ImportItemComponent,
     ConfigurationComponent,
     ExecucaoComponent,
+    ListEmpresaComponent,
+    CadastroEmpresaComponent,
+    DialogMensagemComponent,
 
   ],
   imports: [

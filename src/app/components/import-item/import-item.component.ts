@@ -49,7 +49,6 @@ export class ImportItemComponent implements OnInit {
     this.enderecoService.import().subscribe(
       (list: Item[]) => {
         this.listItem = list;
-        //this.openSnackBar( 'Operação realizada com sucesso', 'OK');
       },
       (err) => {
         console.log('ERROR =' + err);

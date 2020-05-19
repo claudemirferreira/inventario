@@ -2,35 +2,36 @@
 
     <mat-card class="example-card">
         <mat-card-header>
-            <mat-card-title>FORMULARIO DE PESQUISA DE INVENTÁRIO</mat-card-title>
+            <mat-card-title>FORMULÁRIO DE PESQUISA DE EMPRESA</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <p *ngIf="message" class="error"> {{ message }} </p>
 
-            <mat-form-field appearance="legacy" class="example-full-width">
+            <mat-form-field appearance="legacy" class="field-litle-width">
+                <mat-label>Cnpj</mat-label>
+                <input matInput placeholder="cnpj do empresa" [(ngModel)]="objeto.cnpj" maxlength="14">
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy" class="field-form">
                 <mat-label>Nome</mat-label>
-                <input matInput placeholder="nome do inventario" [(ngModel)]="objeto.nome">
+                <input matInput placeholder="nome do empresa" [(ngModel)]="objeto.nome">
             </mat-form-field>
 
         </mat-card-content>
         <mat-card-actions>
 
-            <button mat-raised-button>
-                <i class="material-icons">undo</i>Voltar</button>
-
-            <button mat-raised-button (click)="findAll()">
+            <button mat-raised-button (click)="find()">
                 <i class="material-icons">search</i>Pesquisar</button>
 
-            <button mat-raised-button routerLink="/cadastro-inventario">
+            <button mat-raised-button routerLink="/cadastro-empresa">
                 <i class="material-icons">add_circle_outline</i>Novo</button>
 
         </mat-card-actions>
     </mat-card>
 
     <table mat-table [dataSource]="list" class="mat-elevation-z8">
-        <ng-container matColumnDef="id">
+        <ng-container matColumnDef="cnpj">
             <th mat-header-cell *matHeaderCellDef>Código</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.cnpj }}</td>
         </ng-container>
 
         <ng-container matColumnDef="nome">
@@ -38,27 +39,25 @@
             <td mat-cell *matCellDef="let element">{{ element.nome }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="data">
-            <th mat-header-cell *matHeaderCellDef>Data</th>
-            <td mat-cell *matCellDef="let element">{{element.data | date: 'dd/MM/yyyy'}}</td>
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>E-mail</th>
+            <td mat-cell *matCellDef="let element">{{ element.email }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+        <ng-container matColumnDef="endereco">
+            <th mat-header-cell *matHeaderCellDef>Endereço</th>
+            <td mat-cell *matCellDef="let element">{{ element.endereco }}</td>
         </ng-container>
-
 
         <ng-container matColumnDef="acao">
             <th mat-header-cell *matHeaderCellDef> Ação </th>
             <td mat-cell *matCellDef="let element">
-                <button mat-raised-button [routerLink]="['/cadastro-inventario', element.id]">
+                <button mat-raised-button [routerLink]="['/cadastro-empresa', element.cnpj]">
                     <mat-icon>create</mat-icon>Editar
                 </button>
-                <button mat-raised-button (click)="delete(element)">
+                <button mat-raised-button (click)="confirmaExclusao(element)">
                     <mat-icon>delete_forever</mat-icon>Excluir
                 </button>
-
             </td>
         </ng-container>
 

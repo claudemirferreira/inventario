@@ -9,6 +9,8 @@ import { CadastroInventarioComponent } from './components/list-inventario/cadast
 import { ImportItemComponent } from './components/import-item/import-item.component';
 import { ConfigurationComponent } from './components/configuration/configuration.component';
 import { ExecucaoComponent } from './components/execucao/execucao.component';
+import { ListEmpresaComponent } from './components/list-empresa/list-empresa.component';
+import { CadastroEmpresaComponent } from './components/list-empresa/cadastro-empresa/cadastro-empresa.component';
 
 const routes: Routes = [
   {
@@ -50,6 +52,18 @@ const routes: Routes = [
   {
     path: 'configuration',
     component: ConfigurationComponent,
+  },
+  {
+    path: 'cadastro-empresa',
+    component: CadastroEmpresaComponent,
+  },
+  {
+    path: 'cadastro-empresa/:cnpj',
+    component: CadastroEmpresaComponent,
+  },
+  {
+    path: 'list-empresa',
+    component: ListEmpresaComponent,
   },
   
 ];

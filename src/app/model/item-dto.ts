@@ -14,4 +14,10 @@ export class ItemDto {
 
     quantidade: number;
 
+    primeiraContagem: number;
+
+    segundaContagem: number;
+
+    terceiraContagem: number;
+
 }

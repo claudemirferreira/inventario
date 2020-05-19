@@ -1,0 +1,26 @@
+ 
+mat-form-field {
+    margin-right: 12px;
+}
+  
+mat-select {
+    margin-right: 12px;
+}
+  
+button {
+    margin-right: 12px;
+}
+  
+.field-form {
+    min-width: 150px;
+    max-width: 300px;
+    width: 100%;
+}
+  
+.field-full-width {
+    width: 100%;
+}
+  
+.field-litle-width {
+    width: 120px;
+}
