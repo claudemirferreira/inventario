@@ -7,6 +7,8 @@ import { ItemService } from 'src/app/services/item.service';
 import { Item } from 'src/app/model/item';
 import { EnderecoService } from 'src/app/services/endereco.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Inventario } from 'src/app/model/inventario';
 
 type AOA = any[][];
 
@@ -21,19 +23,28 @@ export class ImportItemComponent implements OnInit {
 
   list: ItemDto[];
   listItem: Item[];
+  inventarioId: number;
 
   displayedColumns: string[] = ['codigo', 'nome', 'unidade', 'endereco', 'boleto', 'quantidade'];
 
   constructor(private service: ImportService
     , private itemService: ItemService
     , private enderecoService: EnderecoService
+    , private router: Router
+    , private route: ActivatedRoute
     , private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    var inventarioId = this.route.params.subscribe((params) => {
+      console.log(params['id']);
+      this.inventarioId = Number.parseInt( params['id']);
+      console.log("id="+this.inventarioId);
+      
+    });
   }
 
   importItens() {
-    this.itemService.import().subscribe(
+    this.itemService.import(this.inventarioId).subscribe(
       (list: Item[]) => {
         this.listItem = list;
         this.openSnackBar( 'Operação realizada com sucesso', 'OK');
@@ -45,6 +56,7 @@ export class ImportItemComponent implements OnInit {
     );
   }
 
+  
   importEnderecos() {
     this.enderecoService.import().subscribe(
       (list: Item[]) => {
@@ -55,6 +67,7 @@ export class ImportItemComponent implements OnInit {
       }
     );
   }
+  
 
   onFileChange(ev) {
     let workBook = null;
@@ -73,10 +86,16 @@ export class ImportItemComponent implements OnInit {
       let responseApi: ResponseApi;
       responseApi = jsonData;
       this.list = responseApi['Sheet1'];
+      var inventario = new Inventario();
+      inventario.id = this.inventarioId;
+      this.list.forEach(element => {
+        element.inventario = inventario;
+      });
 
       this.service.saveAll(this.list).subscribe(
         (list: ItemDto[]) => {
-          this.list = list;
+          this.list = list;// 
+          //this.importItens(); 
           this.openSnackBar( 'Operação realizada com sucesso', 'OK');
         },
         (err) => {

@@ -9,7 +9,7 @@ export class ItemService {
 
   constructor(private http: HttpClient) { }
 
-  import() {
-    return this.http.get(`${INVENTARIO_API}/item`);
+  import(inventarioId: number) {
+    return this.http.get(`${INVENTARIO_API}/item/importItens/`+inventarioId);
   }
 }

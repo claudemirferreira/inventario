@@ -1,3 +1,5 @@
+import { Inventario } from './inventario';
+
 export class ItemDto {
 
     id: number;
@@ -19,5 +21,7 @@ export class ItemDto {
     segundaContagem: number;
 
     terceiraContagem: number;
+
+    inventario: Inventario;
 
 }

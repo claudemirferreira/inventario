@@ -6,6 +6,8 @@ import { Inventario } from 'src/app/model/inventario';
 import { Execucao } from 'src/app/model/execucao';
 import { Observable, empty } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { MensagemErrorComponent } from '../share/mensagem-error/mensagem-error.component';
 
 
 interface StatusInventario {
@@ -49,7 +51,8 @@ export class ExecucaoComponent implements OnInit {
 
   constructor(private inventarioService: InventarioService
     , private service: ExecucaoService
-    , private contagemService: ContagemService ) { }
+    , private contagemService: ContagemService
+    , public dialog: MatDialog ) { }
 
   ngOnInit(): void {
     this.objeto = new Execucao();
@@ -108,11 +111,12 @@ export class ExecucaoComponent implements OnInit {
     
     this.service.finalizarContagem(execucao).subscribe(
       (list: Observable<Execucao[]>) => {
-        this.buscarInventario();
-        this.changeInventario();
+        //this.buscarInventario();
+        //this.changeInventario();
       },
       (err) => {
         console.log('ERROR =' + err);
+        this.mensagemError(err.error);
       }
     );    
   }
@@ -148,6 +152,13 @@ export class ExecucaoComponent implements OnInit {
         console.log('ERROR =' + err);
       }
     );
+  }
+
+  mensagemError(msg: string) {
+    let dialogRef = this.dialog.open(MensagemErrorComponent, { data: { msg: msg, title:'Mensagem de Erro' } })
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   handleError() {

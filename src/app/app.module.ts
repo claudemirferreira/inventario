@@ -11,11 +11,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListInventarioComponent } from './components/list-inventario/list-inventario.component';
 import { CadastroInventarioComponent } from './components/list-inventario/cadastro-inventario/cadastro-inventario.component';
 import { ImportItemComponent } from './components/import-item/import-item.component';
-import { ConfigurationComponent } from './components/configuration/configuration.component';
 import { ExecucaoComponent } from './components/execucao/execucao.component';
 import { ListEmpresaComponent } from './components/list-empresa/list-empresa.component';
 import { CadastroEmpresaComponent } from './components/list-empresa/cadastro-empresa/cadastro-empresa.component';
 import { DialogMensagemComponent } from './components/share/dialog-mensagem/dialog-mensagem.component';
+import { MensagemErrorComponent } from './components/share/mensagem-error/mensagem-error.component';
 
 @NgModule({
   declarations: [
@@ -24,11 +24,11 @@ import { DialogMensagemComponent } from './components/share/dialog-mensagem/dial
     ListInventarioComponent,
     CadastroInventarioComponent,
     ImportItemComponent,
-    ConfigurationComponent,
     ExecucaoComponent,
     ListEmpresaComponent,
     CadastroEmpresaComponent,
     DialogMensagemComponent,
+    MensagemErrorComponent,
 
   ],
   imports: [

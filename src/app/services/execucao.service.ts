@@ -28,7 +28,7 @@ export class ExecucaoService {
   }
 
   finalizarContagem(objeto: Execucao) {
-    return this.http.put<Execucao[]>(`${INVENTARIO_API}/execucao/finalizar-contagem/`+objeto.id, objeto)
+    return this.http.put<Execucao[]>(`${INVENTARIO_API}/execucao/finalizar-contagem/`+objeto.inventario.id, objeto)
       .pipe(
         delay(1000),
         tap(console.log)
