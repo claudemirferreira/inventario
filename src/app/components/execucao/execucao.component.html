@@ -10,7 +10,7 @@
                 <mat-label>Inventario</mat-label>
                 <mat-select [(ngModel)]="inventarioSelecionado" (selectionChange)="changeInventario()">
                     <mat-option *ngFor="let inventario of listInventario" [value]="inventario">
-                        {{inventario.nome }}  {{ inventario.status}}
+                        {{inventario.nome }}  {{ inventario.numeroContagem}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -26,9 +26,9 @@
 
     <table mat-table [dataSource]="list$" class="mat-elevation-z8">
 
-        <ng-container matColumnDef="status">
+        <ng-container matColumnDef="numeroContagem">
             <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let element">{{ element.status }} CONTAGEM</td>
+            <td mat-cell *matCellDef="let element">{{ element.numeroContagem }} CONTAGEM</td>
         </ng-container>
 
         <ng-container matColumnDef="inicio">
@@ -41,20 +41,15 @@
             <td mat-cell *matCellDef="let element">{{element.fim | date: 'dd/MM/yyyy HH:mm'}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="descricao">
-            <th mat-header-cell *matHeaderCellDef>Descrição</th>
-            <td mat-cell *matCellDef="let element">{{ element.descricao }}</td>
-        </ng-container>
-
         <ng-container matColumnDef="acao">
             <th mat-header-cell *matHeaderCellDef> Ação </th>
             <td mat-cell *matCellDef="let element">
-                <div *ngIf="inventarioSelecionado.status == element.status && element.inicio == null">                    
+                <div *ngIf="inventarioSelecionado.numeroContagem == element.numeroContagem && element.inicio == null">                    
                     <button mat-raised-button (click)="iniciarContagem(element)">
                         <mat-icon>play_circle_filled</mat-icon>Iniciar
                     </button>
                 </div>
-                <div *ngIf="inventarioSelecionado.status == element.status  && element.inicio != null">
+                <div *ngIf="inventarioSelecionado.numeroContagem == element.numeroContagem  && element.inicio != null">
                     <button mat-raised-button (click)="finalizarContagem(element)">
                         <mat-icon>check</mat-icon>Finalizar
                     </button>

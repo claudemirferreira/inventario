@@ -20,7 +20,7 @@ export class ExecucaoService {
   }
 
   iniciarContagem(objeto: Execucao) {
-    return this.http.put<Execucao[]>(`${INVENTARIO_API}/execucao/iniciar-contagem/`+objeto.id, objeto)
+    return this.http.put<Execucao[]>(`${INVENTARIO_API}/execucao/iniciarContagem/`+objeto.inventario.id, objeto)
       .pipe(
         delay(1000),
         tap(console.log)
@@ -28,7 +28,7 @@ export class ExecucaoService {
   }
 
   finalizarContagem(objeto: Execucao) {
-    return this.http.put<Execucao[]>(`${INVENTARIO_API}/execucao/finalizar-contagem/`+objeto.inventario.id, objeto)
+    return this.http.put<Execucao[]>(`${INVENTARIO_API}/execucao/finalizarContagem/`+objeto.inventario.id, objeto)
       .pipe(
         delay(1000),
         tap(console.log)

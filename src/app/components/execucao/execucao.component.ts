@@ -42,10 +42,9 @@ export class ExecucaoComponent implements OnInit {
   ];
 
   displayedColumns: string[] = [
-    'status',
+    'numeroContagem',
     'inicio',
     'fim',
-    'descricao',
     'acao',
   ];
 
@@ -88,13 +87,9 @@ export class ExecucaoComponent implements OnInit {
     console.log(execucao.inicio);
 
     this.service.iniciarContagem(data).subscribe(
-      (list: Execucao[]) => {
-        //this.buscarInventario();
-        //if
-         (execucao.status == 1)
-          //this.gerarPrimeiraContagem(this.inventarioSelecionado.id);
-        
-        this.changeInventario();
+      (list: Observable<Execucao[]>) => {
+        this.list$ = list;        
+        //this.changeInventario();
       },
       (err) => {
         console.log('ERROR =' + err);
@@ -111,11 +106,11 @@ export class ExecucaoComponent implements OnInit {
     
     this.service.finalizarContagem(execucao).subscribe(
       (list: Observable<Execucao[]>) => {
-        //this.buscarInventario();
-        //this.changeInventario();
+        this.list$ = list;
       },
       (err) => {
         console.log('ERROR =' + err);
+        execucao.fim = null;
         this.mensagemError(err.error);
       }
     );    

@@ -22,9 +22,9 @@ export class ImportService {
     return this.http.get(`${INVENTARIO_API}/import/`+id);
   }
 
-  saveAll(list: ItemDto[]) {
+  saveAll(list: ItemDto[], inventarioId: number) {
     console.log('/item-import/all');
-    return this.http.post(`${INVENTARIO_API}/item-import/all`, list);
+    return this.http.post(`${INVENTARIO_API}/item-import/all/`+inventarioId, list);
   }
 
 }

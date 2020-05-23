@@ -53,7 +53,7 @@ export class CadastroInventarioComponent implements OnInit {
       if (!id) {
         this.objeto = new Inventario();
         this.objeto.id = 0;
-        this.objeto.status = 1;
+        this.objeto.numeroContagem = '1';
       } else {
         this.service.findById(id).subscribe(
           (inventario: Inventario) => {
@@ -98,7 +98,7 @@ export class CadastroInventarioComponent implements OnInit {
     execucao1.fim = null;
     execucao1.inventario = this.objeto;
     execucao1.descricao = '';
-    execucao1.status = 1;
+    execucao1.numeroContagem = '1';
     this.list.push(execucao1);
 
     let execucao2 = new Execucao();
@@ -106,7 +106,7 @@ export class CadastroInventarioComponent implements OnInit {
     execucao2.fim = null;
     execucao2.inventario = this.objeto;
     execucao2.descricao = '';
-    execucao2.status = 2;
+    execucao2.numeroContagem = '2';
     this.list.push(execucao2);
 
     let execucao3 = new Execucao();
@@ -114,7 +114,7 @@ export class CadastroInventarioComponent implements OnInit {
     execucao3.fim = null;
     execucao3.inventario = this.objeto;
     execucao3.descricao = '';
-    execucao3.status = 3;
+    execucao3.numeroContagem = '3';
     this.list.push(execucao3);
 
   }
@@ -130,7 +130,7 @@ export class CadastroInventarioComponent implements OnInit {
   save(): void {
     this.message = '';
     if (this.objeto.id == 0)
-      this.objeto.status = 1;
+      this.objeto.numeroContagem = '1';
     this.service.save(this.objeto).subscribe(
       (data: Inventario) => {
         this.objeto = data;

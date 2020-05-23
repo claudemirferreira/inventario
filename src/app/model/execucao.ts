@@ -8,7 +8,7 @@ export class Execucao {
 
     fim: Date;
 
-    status: number;
+    numeroContagem: string;
 
     descricao: string;    
 

@@ -92,7 +92,7 @@ export class ImportItemComponent implements OnInit {
         element.inventario = inventario;
       });
 
-      this.service.saveAll(this.list).subscribe(
+      this.service.saveAll(this.list, inventario.id).subscribe(
         (list: ItemDto[]) => {
           this.list = list;// 
           //this.importItens(); 
