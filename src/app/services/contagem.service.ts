@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { INVENTARIO_API } from './inventario.api';
+import { Contagem } from '../model/contagem';
+import { delay, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContagemService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }  
 
-  gerarPrimeiraContagem(data) {
-    console.log('entrou no gerarPrimeiraContagem');
-    return this.http.post(`${INVENTARIO_API}/contagem/gerar-primeira-contagem`, data);
+  findByIdInventario(id: number) {
+    return this.http.get<Contagem[]>(`${INVENTARIO_API}/contagem/inventario/`+id)
+      .pipe(
+        delay(1000),
+        tap(console.log)
+      );
+
   }
 }

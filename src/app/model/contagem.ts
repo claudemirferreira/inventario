@@ -1,8 +1,22 @@
-export class Inventario {
+import { Inventario } from './inventario';
+import { Endereco } from './endereco';
 
-  id: number;
-  data: Date;
-  nome: string;
-  status: string;
+export class Contagem {
+  
+    id: number;
+
+    numeroContagem: string;
+
+    status: string;
+
+    quantidade: number;
+
+    data: Date;
+
+    observacao: string;
+
+    inventario: Inventario;
+    
+    endereco: Endereco;
 
 }

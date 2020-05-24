@@ -126,17 +126,6 @@ export class ExecucaoComponent implements OnInit {
     );
   }
 
-  gerarPrimeiraContagem(id: number) {
-    this.contagemDto.idInventario = id;
-    this.contagemService.gerarPrimeiraContagem(this.contagemDto).pipe(
-      catchError(error => {
-        console.error(error);
-        this.handleError();
-        return empty();
-      })
-    );
-  }
-
   findAllInventario(): void {
     this.inventarioService.findAll().subscribe(
       (listInventario: Inventario[]) => {

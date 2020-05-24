@@ -16,6 +16,7 @@ import { ListEmpresaComponent } from './components/list-empresa/list-empresa.com
 import { CadastroEmpresaComponent } from './components/list-empresa/cadastro-empresa/cadastro-empresa.component';
 import { DialogMensagemComponent } from './components/share/dialog-mensagem/dialog-mensagem.component';
 import { MensagemErrorComponent } from './components/share/mensagem-error/mensagem-error.component';
+import { ContagemComponent } from './components/contagem/contagem.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MensagemErrorComponent } from './components/share/mensagem-error/mensag
     CadastroEmpresaComponent,
     DialogMensagemComponent,
     MensagemErrorComponent,
+    ContagemComponent,
 
   ],
   imports: [
