@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Inventario } from 'src/app/model/inventario';
 import { InventarioService } from 'src/app/services/inventario.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ImportXlsComponent } from './import-xls/import-xls.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-list-inventario',
@@ -24,7 +26,8 @@ export class ListInventarioComponent implements OnInit {
   ];
 
   constructor(private service: InventarioService
-    ,private _snackBar: MatSnackBar) {
+    ,private _snackBar: MatSnackBar,
+    public dialog: MatDialog) {
 
   }
 
@@ -64,6 +67,13 @@ export class ListInventarioComponent implements OnInit {
     this._snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  openDialogXls(inventario: Inventario) {
+    let dialogRef = this.dialog.open(ImportXlsComponent, { data: {inventario: inventario}})
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
   }
 
 }

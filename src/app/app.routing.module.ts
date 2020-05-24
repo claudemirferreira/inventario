@@ -5,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListInventarioComponent } from './components/list-inventario/list-inventario.component';
 import { CadastroInventarioComponent } from './components/list-inventario/cadastro-inventario/cadastro-inventario.component';
-import { ImportItemComponent } from './components/import-item/import-item.component';
 import { ExecucaoComponent } from './components/execucao/execucao.component';
 import { ListEmpresaComponent } from './components/list-empresa/list-empresa.component';
 import { CadastroEmpresaComponent } from './components/list-empresa/cadastro-empresa/cadastro-empresa.component';
@@ -40,14 +39,6 @@ const routes: Routes = [
     component: ExecucaoComponent,
   },
   {
-    path: 'import',
-    component: ImportItemComponent,
-  },
-  {
-    path: 'import/:id',
-    component: ImportItemComponent,
-  },
-  {
     path: 'cadastro-empresa',
     component: CadastroEmpresaComponent,
   },
@@ -59,7 +50,7 @@ const routes: Routes = [
     path: 'list-empresa',
     component: ListEmpresaComponent,
   },
-  
+
 ];
 
 @NgModule({

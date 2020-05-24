@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImportItemComponent } from './import-item.component';
+import { ImportXlsComponent } from './import-xls.component';
 
-describe('ImportItemComponent', () => {
-  let component: ImportItemComponent;
-  let fixture: ComponentFixture<ImportItemComponent>;
+describe('ImportXlsComponent', () => {
+  let component: ImportXlsComponent;
+  let fixture: ComponentFixture<ImportXlsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImportItemComponent ]
+      declarations: [ ImportXlsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ImportItemComponent);
+    fixture = TestBed.createComponent(ImportXlsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

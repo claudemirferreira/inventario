@@ -10,13 +10,13 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListInventarioComponent } from './components/list-inventario/list-inventario.component';
 import { CadastroInventarioComponent } from './components/list-inventario/cadastro-inventario/cadastro-inventario.component';
-import { ImportItemComponent } from './components/import-item/import-item.component';
 import { ExecucaoComponent } from './components/execucao/execucao.component';
 import { ListEmpresaComponent } from './components/list-empresa/list-empresa.component';
 import { CadastroEmpresaComponent } from './components/list-empresa/cadastro-empresa/cadastro-empresa.component';
 import { DialogMensagemComponent } from './components/share/dialog-mensagem/dialog-mensagem.component';
 import { MensagemErrorComponent } from './components/share/mensagem-error/mensagem-error.component';
 import { ContagemComponent } from './components/contagem/contagem.component';
+import { ImportXlsComponent } from './components/list-inventario/import-xls/import-xls.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +24,13 @@ import { ContagemComponent } from './components/contagem/contagem.component';
     LoginComponent,
     ListInventarioComponent,
     CadastroInventarioComponent,
-    ImportItemComponent,
     ExecucaoComponent,
     ListEmpresaComponent,
     CadastroEmpresaComponent,
     DialogMensagemComponent,
     MensagemErrorComponent,
     ContagemComponent,
+    ImportXlsComponent,
 
   ],
   imports: [

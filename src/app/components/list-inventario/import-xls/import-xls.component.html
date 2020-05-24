@@ -1,0 +1,23 @@
+<mat-tab-group>
+  <mat-tab label="Importação do arquivo XLS">
+
+      <mat-card class="example-card">
+          <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>Importação de itens do inventário {{ inventario.nome }} - {{ inventario.data | date: "dd/MM/yyyy"}}</mat-card-title>
+              <mat-card-subtitle>Selecione o arquivo excel para importar os dados</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+              <input type="file" (change)="onFileChange($event)" />
+          </mat-card-content>
+
+      </mat-card>
+  </mat-tab>
+
+</mat-tab-group>
+
+<mat-divider></mat-divider>
+
+<div *ngIf="willDownload">
+  <a id="download"> Download JSON File </a>
+</div>
