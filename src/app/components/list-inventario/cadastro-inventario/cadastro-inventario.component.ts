@@ -6,6 +6,7 @@ import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Execucao } from 'src/app/model/execucao';
 import { ExecucaoService } from 'src/app/services/execucao.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cadastro-inventario',
@@ -41,8 +42,8 @@ export class CadastroInventarioComponent implements OnInit {
     private service: InventarioService,
     private execucaoService: ExecucaoService,
     private formBuilder: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -139,12 +140,16 @@ export class CadastroInventarioComponent implements OnInit {
       },
       (err) => {
         console.log('erro de autenticação=' + JSON.stringify(err.status));
-        if (err.status == '400')
-          this.message =
-            'Ja existe um usuario com o logn ' + this.objeto.nome;
-        else this.message = 'Erro: entre em contato com o suporte';
+        this.openSnackBar('Error: Entre em contato com o suporte', 'OK');
         console.log(this.message);
       }
     );
   }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+
 }
