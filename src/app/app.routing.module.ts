@@ -8,6 +8,7 @@ import { CadastroInventarioComponent } from './components/list-inventario/cadast
 import { ExecucaoComponent } from './components/execucao/execucao.component';
 import { ListEmpresaComponent } from './components/list-empresa/list-empresa.component';
 import { CadastroEmpresaComponent } from './components/list-empresa/cadastro-empresa/cadastro-empresa.component';
+import { AuthGuard } from './components/login/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,8 +16,12 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: '',
+    component: LoginComponent },
+  {
     path: 'list-inventario',
     component: ListInventarioComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'cadastro-inventario/:id',
@@ -50,7 +55,6 @@ const routes: Routes = [
     path: 'list-empresa',
     component: ListEmpresaComponent,
   },
-
 ];
 
 @NgModule({

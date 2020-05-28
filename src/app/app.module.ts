@@ -1,10 +1,11 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app/app.routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MaterialModule } from '../app/components/material/material.module';
 import { LoginComponent } from '../app/components/login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,6 +18,13 @@ import { DialogMensagemComponent } from './components/share/dialog-mensagem/dial
 import { MensagemErrorComponent } from './components/share/mensagem-error/mensagem-error.component';
 import { ContagemComponent } from './components/contagem/contagem.component';
 import { ImportXlsComponent } from './components/list-inventario/import-xls/import-xls.component';
+import { ItemComponent } from './components/item/item.component';
+import { HeaderComponent } from './components/header/header.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { UserService } from './services/user.service';
+import { SharedService } from './services/shared.service';
+import { AuthGuard } from './components/login/auth.guard';
+import { AuthInterceptor } from './components/login/AuthInterceptor';
 
 @NgModule({
   declarations: [
@@ -31,6 +39,9 @@ import { ImportXlsComponent } from './components/list-inventario/import-xls/impo
     MensagemErrorComponent,
     ContagemComponent,
     ImportXlsComponent,
+    ItemComponent,
+    HeaderComponent,
+    LayoutComponent,
 
   ],
   imports: [
@@ -40,10 +51,19 @@ import { ImportXlsComponent } from './components/list-inventario/import-xls/impo
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FlexLayoutModule
 
   ],
-  providers: [],
+  providers: [UserService,
+    SharedService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

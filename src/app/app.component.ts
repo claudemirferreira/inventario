@@ -6,6 +6,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { SharedService } from './services/shared.service';
+import { CurrentUser } from './model/current-user';
 
 @Component({
   selector: 'app-root',
@@ -14,18 +16,31 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent  implements OnInit {
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(result => result.matches));
+  title = ' - Sistema de Gerenciamento de Relatórios';
+  isAuthenticated: boolean;
+  showTemplate: boolean = false;
+  shared : SharedService;
 
-  @ViewChild('panel', { static: true })
-  private sidePanel: MatSidenav;
-
-  @ViewChild('content', { static: true, read: ViewContainerRef })
-  private vcf: ViewContainerRef;
-
-  constructor(private breakpointObserver: BreakpointObserver, private sidenavService: SidenavService) {}
-
-  ngOnInit() {
-    this.sidenavService.setPanel(this.sidePanel);
-    this.sidenavService.setContentVcf(this.vcf);
+  constructor() {
+    this.shared = SharedService.getInstance();
+    this.logoff();
   }
+
+  logoff(){
+    this.shared.currentUser = new CurrentUser();
+    this.isAuthenticated = false;
+  }
+
+  async ngOnInit() {
+    this.shared.showTemplate.subscribe(
+      show => this.showTemplate = show
+    );
+  }
+
+  showContentWrapper(){
+    return {
+      'content-wrapper': this.shared.isLoggedIn()
+    }
+  }
+
 }
