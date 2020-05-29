@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
         this.shared.currentUser = userAuthentication;
         console.log('USUARIO='+JSON.stringify(this.shared.currentUser.token));
         this.shared.showTemplate.emit(true);
-        this.router.navigate(['/contagem']);
+        this.router.navigate(['/home']);
     } , err => {
 
       console.log('erro de autenticação='+ JSON.stringify(err));

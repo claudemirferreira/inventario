@@ -1,3 +1,4 @@
+import { HomeComponent } from './components/home/home.component';
 import { ContagemComponent } from './components/contagem/contagem.component';
 import { ItemComponent } from './components/item/item.component';
 import { LoginComponent } from './components/login/login.component';
@@ -18,6 +19,9 @@ const routes: Routes = [
   {
     path: '',
     component: LoginComponent },
+  {
+      path: 'home',
+      component: HomeComponent },
   {
     path: 'list-inventario',
     component: ListInventarioComponent,
