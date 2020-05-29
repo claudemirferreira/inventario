@@ -19,7 +19,6 @@ import { MensagemErrorComponent } from './components/share/mensagem-error/mensag
 import { ContagemComponent } from './components/contagem/contagem.component';
 import { ImportXlsComponent } from './components/list-inventario/import-xls/import-xls.component';
 import { ItemComponent } from './components/item/item.component';
-import { HeaderComponent } from './components/header/header.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { UserService } from './services/user.service';
 import { SharedService } from './services/shared.service';
@@ -40,7 +39,6 @@ import { AuthInterceptor } from './components/login/AuthInterceptor';
     ContagemComponent,
     ImportXlsComponent,
     ItemComponent,
-    HeaderComponent,
     LayoutComponent,
 
   ],
