@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
         if(this.shared.isLoggedIn()){
             authRequest = req.clone({
                 setHeaders: {
-                    'Authorization' : this.shared.currentUser.token
+                    'Authorization' : 'Bearer '+ this.shared.currentUser.token
                 }
             });
             return next.handle(authRequest);
