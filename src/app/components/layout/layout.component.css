@@ -17,6 +17,10 @@
 	font-size: 1.5em;
 }
 
+.usuario-logado {
+  font-size: 14px;
+}
+
 mat-toolbar {
 	width: 100%;
 }
