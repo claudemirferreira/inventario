@@ -18,6 +18,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule }  from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatStepperModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatMenuModule,
 
   ],
   exports: [
@@ -59,6 +61,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatStepperModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatMenuModule,
 
   ],
 })

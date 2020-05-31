@@ -24,10 +24,11 @@ export class LoginComponent implements OnInit {
 
   constructor(private userService: UserService,
               private router: Router) {
-    this.shared = SharedService.getInstance();
+    this.shared = new SharedService();
     this.shared.currentUser.token = null;
     this.shared.currentUser.username = null;
     this.shared.showTemplate.emit(false);
+    console.log('entrou no login========')
   }
 
   ngOnInit() {
@@ -51,18 +52,6 @@ export class LoginComponent implements OnInit {
     } , err => {
 
       console.log('erro de autenticação='+ JSON.stringify(err));
-      /*
-      //this.erro =  err.status;
-      console.log(this.erro.status);
-      if(err.status == '401')
-        this.message = 'Login e senha invalidos';
-      else
-        this.message = 'Erro: entre em contato com admin';
-        this.shared.currentUser.token = null;
-        this.shared.currentUser.username = null;
-        this.shared.showTemplate.emit(false);
-        console.log(this.message);
-        */
 
     });
 
