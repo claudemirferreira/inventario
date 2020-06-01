@@ -1,7 +1,10 @@
+import { UserFilter } from './../filters/user-filter';
+import { BasePaginatedResponse } from './../base/base-paginated.response';
 import { Injectable } from '@angular/core';
 import { Autentication } from '../model/autentication';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { API } from './api';
+import { INVENTARIO_API } from './inventario.api';
 
 import { User } from '../model/user';
 
@@ -10,11 +13,15 @@ import { User } from '../model/user';
 })
 export class UserService {
 
+  protected serverUrl;
+  
   page :string;
   size :string;
   param = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.serverUrl += `${INVENTARIO_API}/users/`;
+  }
 
   login(user: Autentication){
     console.log(JSON.stringify(user));
@@ -34,8 +41,16 @@ export class UserService {
     return this.http.put(`${API}/user`,user);
   }
 
-  findAll(page:number,count:number){
-    return this.http.get(`${API}/user/${page}/${count}`);
+  findAll(filters?: UserFilter){
+    let params = new HttpParams();
+    if (filters) {
+      Object.keys(filters).forEach(function (key) {
+          if (filters[key] !== null && filters[key] !== undefined) {
+              params = params.append(key, filters[key]);
+          }
+      });
+    }
+    return this.http.get<BasePaginatedResponse<User>>(this.serverUrl, {params});
   }
 
   findById(codigo:number){

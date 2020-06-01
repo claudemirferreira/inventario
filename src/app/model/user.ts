@@ -14,6 +14,8 @@ export class User {
 
   empresa: Empresa;
 
+  count: number;
+
   constructor() { }
 
 }

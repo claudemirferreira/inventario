@@ -1,3 +1,4 @@
+import { UserComponent } from './components/user/user.component';
 import { HomeComponent } from './components/home/home.component';
 import { ContagemComponent } from './components/contagem/contagem.component';
 import { ItemComponent } from './components/item/item.component';
@@ -58,6 +59,10 @@ const routes: Routes = [
   {
     path: 'list-empresa',
     component: ListEmpresaComponent,
+  },
+  {
+    path: 'usuario',
+    component: UserComponent,
   },
 ];
 

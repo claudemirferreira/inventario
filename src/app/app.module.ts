@@ -24,6 +24,7 @@ import { UserService } from './services/user.service';
 import { SharedService } from './services/shared.service';
 import { AuthGuard } from './components/login/auth.guard';
 import { AuthInterceptor } from './components/login/AuthInterceptor';
+import { UserComponent } from './components/user/user.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { AuthInterceptor } from './components/login/AuthInterceptor';
     ImportXlsComponent,
     ItemComponent,
     LayoutComponent,
-
+    UserComponent,
   ],
   imports: [
     BrowserModule,
