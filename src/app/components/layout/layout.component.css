@@ -1,0 +1,26 @@
+
+.container {
+	width: 100%;
+	margin: 0 auto;
+  display: flex;
+
+}
+
+.space-between {
+	justify-content: space-between;
+}
+
+.item {
+	margin: 5px;
+	padding: 0 10px;
+	text-align: center;
+	font-size: 1.5em;
+}
+
+.usuario-logado {
+  font-size: 14px;
+}
+
+mat-toolbar {
+	width: 100%;
+}

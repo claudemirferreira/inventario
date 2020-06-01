@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container *ngIf="isLoggedIn()" class="sidenav-container">
   <mat-sidenav
     #drawer
     class="sidenav"
@@ -7,7 +7,7 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)"
   >
-    <mat-toolbar>Menu</mat-toolbar>
+    <mat-toolbar>Menu </mat-toolbar>
     <mat-nav-list>
       <a mat-list-item [routerLink]="['/list-inventario']">Inventário</a>
       <a mat-list-item [routerLink]="['/execucao']">Execução</a>
@@ -17,12 +17,44 @@
       <a mat-list-item [routerLink]="['/usuario']">Usuários</a>
     </mat-nav-list>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>Sistema de Controle de Inventário - SF TORRES</span>
+      <section class="container space-between">
+        <div class="item">
+          <button
+            type="button"
+            aria-label="Toggle sidenav"
+            mat-icon-button
+            (click)="drawer.toggle()"
+            *ngIf="isHandset$ | async">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+        </div>
+        <div class="item"><span>SCI - 7BIT Sistemas</span></div>
+        <div class="item">
+          <span class="logout">
+            <span class="usuario-logado">
+              Usuário: {{shared.currentUser.nome}}
+            </span>
+            <button
+              mat-mini-fab
+              matTooltip="John Doe"
+              [matMenuTriggerFor]="menu"
+              color="accent"
+            >
+              <mat-icon>perm_identity</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="logout()">
+                <mat-icon>power_settings_new</mat-icon>
+                <span>Logout</span>
+              </button>
+            </mat-menu>
+          </span>
+        </div>
+      </section>
+
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
