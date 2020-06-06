@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { INVENTARIO_API } from './inventario.api';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,6 @@ export class EnderecoService {
   constructor(private http: HttpClient) { }
 
   import() {
-    return this.http.get(`${INVENTARIO_API}/endereco`);
+    return this.http.get(`${environment.API}/endereco`);
   }
 }

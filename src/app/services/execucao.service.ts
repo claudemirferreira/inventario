@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { INVENTARIO_API } from './inventario.api';
 import { HttpClient } from '@angular/common/http';
 import { Execucao } from '../model/execucao';
 import { delay, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +12,15 @@ export class ExecucaoService {
   constructor(private http: HttpClient) { }
 
   findAll() {
-    return this.http.get(`${INVENTARIO_API}/execucao`);
+    return this.http.get(`${environment.API}/execucao`);
   }
 
   save(objeto: Execucao[]) {
-    return this.http.post(`${INVENTARIO_API}/execucao`, objeto);
+    return this.http.post(`${environment.API}/execucao`, objeto);
   }
 
   iniciarContagem(objeto: Execucao) {
-    return this.http.put<Execucao[]>(`${INVENTARIO_API}/execucao/iniciarContagem/`+objeto.inventario.id, objeto)
+    return this.http.put<Execucao[]>(`${environment.API}/execucao/iniciarContagem/`+objeto.inventario.id, objeto)
       .pipe(
         delay(1000),
         tap(console.log)
@@ -28,7 +28,7 @@ export class ExecucaoService {
   }
 
   finalizarContagem(objeto: Execucao) {
-    return this.http.put<Execucao[]>(`${INVENTARIO_API}/execucao/finalizarContagem/`+objeto.inventario.id, objeto)
+    return this.http.put<Execucao[]>(`${environment.API}/execucao/finalizarContagem/`+objeto.inventario.id, objeto)
       .pipe(
         delay(1000),
         tap(console.log)
@@ -36,11 +36,11 @@ export class ExecucaoService {
   }
 
   findById(id: number) {
-    return this.http.get(`${INVENTARIO_API}/execucao/`+id);
+    return this.http.get(`${environment.API}/execucao/`+id);
   }
 
   findByIdInventario(id: number) {
-    return this.http.get<Execucao[]>(`${INVENTARIO_API}/execucao/inventario/`+id)
+    return this.http.get<Execucao[]>(`${environment.API}/execucao/inventario/`+id)
       .pipe(
         delay(1000),
         tap(console.log)
@@ -49,7 +49,7 @@ export class ExecucaoService {
   }
 
   delete(id: number) {
-    return this.http.delete(`${INVENTARIO_API}/execucao/`+id);
+    return this.http.delete(`${environment.API}/execucao/`+id);
   }
-  
+
 }
