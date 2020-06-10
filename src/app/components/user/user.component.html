@@ -6,6 +6,11 @@
         </mat-card-header>
     </mat-card>
 
+    <mat-form-field class='user-filter-style'>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="usersFiltering($event)" placeholder="Ex. Joaquin Francisco ou 123">
+    </mat-form-field>      
+
     <table mat-table [dataSource]="users">
         <ng-container matColumnDef="codigo">
             <th mat-header-cell *matHeaderCellDef>Id</th>

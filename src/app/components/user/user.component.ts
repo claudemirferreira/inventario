@@ -168,9 +168,15 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.filter.limit = $evt.pageSize;
     this.filter.page = $evt.pageIndex;
     this.getList(this.filter);
-
   }
 
-  
+  usersFiltering(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    
+      this.filter.name = filterValue;
+      this.getList(this.filter);
+    
+    
+  }
 
 }
