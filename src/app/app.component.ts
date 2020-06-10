@@ -1,6 +1,7 @@
+import { DependencyInjector } from './base/dependency-injector';
 import { SidenavService } from './services/sidenav.service';
 
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, Injector } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -21,7 +22,8 @@ export class AppComponent  implements OnInit {
   showTemplate: boolean = false;
   shared : SharedService;
 
-  constructor() {
+  constructor(injector: Injector) {
+    DependencyInjector.setup(injector);
     this.shared = SharedService.getInstance();
     this.logoff();
   }

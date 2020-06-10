@@ -20,7 +20,7 @@ export class UserService {
   param = '';
 
   constructor(private http: HttpClient) {
-    this.serverUrl += `${INVENTARIO_API}/users/`;
+    this.serverUrl = `${INVENTARIO_API}/user/`;
   }
 
   login(user: Autentication){

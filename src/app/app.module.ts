@@ -25,6 +25,10 @@ import { SharedService } from './services/shared.service';
 import { AuthGuard } from './components/login/auth.guard';
 import { AuthInterceptor } from './components/login/AuthInterceptor';
 import { UserComponent } from './components/user/user.component';
+import { RemoveComponent } from './base/dialog/remove/remove.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { ToastrModule } from 'ngx-toastr';
+import { NewUserComponent } from './components/user/new-user/new-user.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +46,8 @@ import { UserComponent } from './components/user/user.component';
     ItemComponent,
     LayoutComponent,
     UserComponent,
+    RemoveComponent,
+    NewUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +57,12 @@ import { UserComponent } from './components/user/user.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatPaginatorModule,
+    ToastrModule.forRoot({
+      preventDuplicates: true,
+      enableHtml: true
+    }),
 
   ],
   providers: [UserService,
