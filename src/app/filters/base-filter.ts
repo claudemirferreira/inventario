@@ -1,6 +1,6 @@
 export class BaseFilter {
-    limit: 10;
-    page: 1;
+    limit: number = 10;
+    page: number = 0;
     ordering: string;
     active: boolean;
     is_active: boolean;

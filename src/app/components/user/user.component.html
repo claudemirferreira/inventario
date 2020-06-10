@@ -1,4 +1,4 @@
-<div class="mat-app-background basic-container">
+<div class="mat-app-background basic-container mat-elevation-z8">
 
     <mat-card class="example-card">
         <mat-card-header>
@@ -40,10 +40,15 @@
             </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator 
+        [pageSize]="10" 
+        [length]=userResponse.count 
+        [pageSizeOptions]="[5, 10, 20]" 
+        (page)="pageChanged($event)">
+    </mat-paginator>
 
 </div>

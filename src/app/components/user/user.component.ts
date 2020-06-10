@@ -22,14 +22,17 @@ import { MatPaginator } from '@angular/material/paginator';
 export class UserComponent extends BaseComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  
 
   private eventService: EventService;
   public users: User[];
+  public userResponse: BasePaginatedResponse<User>;
   public usuarioSelecionado: User;
   private filter: UserFilter;
   private paginatorModel: Paginator;
   private listSub: Subscription;
 
+  public dataSource = new MatTableDataSource<User>();
   public loading: boolean;
   public noResults: boolean;
 
@@ -51,6 +54,9 @@ export class UserComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.users = new Array<User>();
     this.paginatorModel = new Paginator();
+    this.userResponse = new BasePaginatedResponse();
+
+    this.paginator._intl.itemsPerPageLabel = 'Itens por página.';
     this.getList();
   }
 
@@ -60,8 +66,7 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   getList(filter?) {
     if (filter) {
-      this.filter.page = 1;
-      this.setPaginator();
+      this.setPaginator(null, this.filter.page, this.filter.limit);
     } else {
       this.filter = new UserFilter();
     }
@@ -69,8 +74,11 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.users = new Array<User>();
     this.loading = true;
     this.listSub = this.userService.findAll(filter).subscribe((response) => {
-      if (response.results.length > 0) {
-        this.users = response.results;
+      if (response.results) {        
+        this.userResponse = response;
+        this.users = this.userResponse.results;
+        this.dataSource.data = this.users;
+
         this.noResults = false;
         this.setPaginator(response, this.filter.page);
       } else {
@@ -88,26 +96,23 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
   setPaginator(response?: any, page?: number, limit?: number): void {
-    if (response && !page) {
-      page = 1;
-      this.filter.page = 1;
+    if (!page) {
+      this.filter.page = 0;
     }
 
     if (!limit) {
-      limit = 10;
       this.filter.limit = 10;
     }
 
     if (page) {
       this.paginatorModel.pageSize = limit;
       this.paginatorModel.pageNumber = page;
-      this.paginatorModel.totalResult = response.count;
-      this.paginatorModel.totalPages = Math.ceil(response.count / limit);
-    } else {
-      this.paginatorModel.totalResult = 0;
-      this.paginatorModel.totalPages = 0;
-      this.paginatorModel.pageNumber = 1;
-    }
+      this.paginatorModel.totalResult = this.userResponse.count;
+      this.paginatorModel.totalPages = Math.ceil(this.userResponse.count / limit);
+      this.paginatorModel.next = this.userResponse.next;
+      this.paginatorModel.previus = this.userResponse.previous;
+    } 
+    
   }
 
   openRemoveDialog(user: User): void {
@@ -130,8 +135,6 @@ export class UserComponent extends BaseComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
-
       if(result) {
         this.update(result);
       }
@@ -159,5 +162,15 @@ export class UserComponent extends BaseComponent implements OnInit {
       console.log(err);
     });
   }
+
+  pageChanged($evt) {
+    console.log($evt);
+    this.filter.limit = $evt.pageSize;
+    this.filter.page = $evt.pageIndex;
+    this.getList(this.filter);
+
+  }
+
+  
 
 }

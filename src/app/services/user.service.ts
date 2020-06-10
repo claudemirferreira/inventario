@@ -38,7 +38,7 @@ export class UserService {
   }
 
   update(user: User){
-    return this.http.put(`${API}/user`,user);
+    return this.http.put(`${API}/user/${user.codigo}`,user);
   }
 
   findAll(filters?: UserFilter){

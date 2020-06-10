@@ -39,8 +39,8 @@ export class NewUserComponent<T extends BaseComponent> implements OnInit {
 
   onSaveClick(): void {
     if(this.validate()) {
-      this.data.password = this.password;
-      this.dialogRef
+      this.data.user.password = this.password;
+      this.dialogRef.close(this.data.user);
     }    
   }
 
