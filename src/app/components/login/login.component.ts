@@ -8,6 +8,7 @@ import { Erro } from '../../model/erro'
 import { Router } from '@angular/router';
 import { PerfilService } from 'src/app/services/perfil.service';
 import { Perfil } from 'src/app/model/perfil';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private userService: UserService,
               private perfilService: PerfilService,
+              private _snackBar: MatSnackBar,
               private router: Router) {
     this.shared = new SharedService();
     this.shared.currentUser.token = null;
@@ -55,6 +57,7 @@ export class LoginComponent implements OnInit {
         this.listarPerfilUsuario();
         this.router.navigate(['/home']);
     } , err => {
+      this.openSnackBar( 'Alerta: '+ err.error.error, 'OK');
 
       console.log('erro de autenticação='+ JSON.stringify(err));
 
@@ -68,9 +71,7 @@ export class LoginComponent implements OnInit {
       console.log('USUARIO='+JSON.stringify(list));
       console.log('######lista perfillllll');
   } , err => {
-
     console.log('erro de autenticação='+ JSON.stringify(err));
-
   });
 }
 
@@ -87,6 +88,12 @@ export class LoginComponent implements OnInit {
       'has-error' : isInvalid  && isDirty,
       'has-success' : !isInvalid  && isDirty
     };
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 4000,
+    });
   }
 
 }
