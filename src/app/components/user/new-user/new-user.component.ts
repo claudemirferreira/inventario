@@ -26,7 +26,6 @@ export class NewUserComponent<T extends BaseComponent> implements OnInit {
 
   ngOnInit(): void {
     this.data.user = this.data.update ? this.data.user : new User();
-    console.log(this.data.user)
     this.password = "";
     this.formValidate = true;
     this.toastr.clear();
@@ -40,7 +39,7 @@ export class NewUserComponent<T extends BaseComponent> implements OnInit {
     if(this.validate()) {
       this.data.user.password = this.password;
       this.dialogRef.close(this.data.user);
-    }    
+    } 
   }
 
   get isNeedsToConfirmPassword() {
