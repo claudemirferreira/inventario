@@ -148,7 +148,9 @@ export class UserComponent extends BaseComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.createOrUpdate(result);
+      if(result) {
+        this.createOrUpdate(result);
+      }
     });
   }
 
@@ -175,7 +177,7 @@ export class UserComponent extends BaseComponent implements OnInit {
         this.toastr.success('Usuário cadastrado com sucesso.');
       }
     }, err => {
-      this.openSnackBar('Error: Entre em contato com o suporte', 'OK');
+      this.openSnackBar(err.error.message, 'OK');
       console.log(err);
     });
   }
