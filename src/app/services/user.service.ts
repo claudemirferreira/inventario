@@ -2,13 +2,8 @@ import { UserFilter } from './../filters/user-filter';
 import { BasePaginatedResponse } from './../base/base-paginated.response';
 import { Injectable } from '@angular/core';
 import { Autentication } from '../model/autentication';
-<<<<<<< HEAD
+
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { API } from './api';
-import { INVENTARIO_API } from './inventario.api';
-=======
-import { HttpClient } from '@angular/common/http';
->>>>>>> master
 
 import { User } from '../model/user';
 import { environment } from 'src/environments/environment';
@@ -19,13 +14,13 @@ import { environment } from 'src/environments/environment';
 export class UserService {
 
   protected serverUrl;
-  
+
   page :string;
   size :string;
   param = '';
 
   constructor(private http: HttpClient) {
-    this.serverUrl = `${INVENTARIO_API}/user/`;
+    this.serverUrl = `${environment.API}/user/`;
   }
 
   login(user: Autentication){
@@ -34,13 +29,9 @@ export class UserService {
   }
 
   createOrUpdate(user: User){
-<<<<<<< HEAD
     if(user.codigo != null){
-      return this.http.put(`${API}/user/${user.codigo}`,user);
-=======
-    if(user.codigo != null && user.codigo > 0){
-      return this.http.put(`${environment.API}/user`,user);
->>>>>>> master
+      return this.http.put(`${environment.API}/user/${user.codigo}`,user);
+
     } else {
       user.codigo = null;
       return this.http.post(`${environment.API}/user`, user);
@@ -48,8 +39,7 @@ export class UserService {
   }
 
   update(user: User){
-<<<<<<< HEAD
-    return this.http.put(`${API}/user/${user.codigo}`,user);
+    return this.http.put(`${environment.API}/user/${user.codigo}`,user);
   }
 
   findAll(filters?: UserFilter){
@@ -62,13 +52,7 @@ export class UserService {
       });
     }
     return this.http.get<BasePaginatedResponse<User>>(this.serverUrl, {params});
-=======
-    return this.http.put(`${environment.API}/user`,user);
-  }
 
-  findAll(page:number,count:number){
-    return this.http.get(`${environment.API}/user/${page}/${count}`);
->>>>>>> master
   }
 
   findById(codigo:number){
