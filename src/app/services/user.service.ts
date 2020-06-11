@@ -29,8 +29,8 @@ export class UserService {
   }
 
   createOrUpdate(user: User){
-    if(user.codigo != null && user.codigo > 0){
-      return this.http.put(`${API}/user`,user);
+    if(user.codigo != null){
+      return this.http.put(`${API}/user/${user.codigo}`,user);
     } else {
       user.codigo = null;
       return this.http.post(`${API}/user`, user);

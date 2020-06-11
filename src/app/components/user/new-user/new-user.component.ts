@@ -12,13 +12,11 @@ import { throwIfEmpty } from 'rxjs/operators';
 })
 export class NewUserComponent<T extends BaseComponent> implements OnInit {
 
-  private update?: boolean 
   public hide: boolean = true;
   public hideConfirmation: boolean = true;
   public password: string;
   public passwordConfirmation: string;
   public formValidate: boolean;
-
 
   constructor(
     public dialogRef: MatDialogRef<T>, 
@@ -27,7 +25,8 @@ export class NewUserComponent<T extends BaseComponent> implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.update = this.data ? true : false;    
+    this.data.user = this.data.update ? this.data.user : new User();
+    console.log(this.data.user)
     this.password = "";
     this.formValidate = true;
     this.toastr.clear();
@@ -49,20 +48,34 @@ export class NewUserComponent<T extends BaseComponent> implements OnInit {
   }
 
   private validate() {
-    if(this.update) {
+    if(this.data.user.codigo) {
       if(this.password == this.passwordConfirmation) {
         return true;
+      } else {
+        this.formValidate = false;
+        this.toastr.error("Senhas não correspondem");
+        return false;
       }
+    } else {
+        if(this.data.user.nome == null || this.data.user.nome == 0) {
+          this.toastr.error("O nome do usuário é um campo requerido !");
+          return false;
+        } else if(this.data.user.username == null || this.data.user.username.length == 0) {
+          this.toastr.error("O usuername é um campo requerido !");
+          return false;
+        } else if(this.password == null || this.password.length == 0) {
+          this.toastr.error("A senha é um campo requerido !");
+          return false;
+        } else if(this.password !== this.passwordConfirmation) {
+          this.toastr.error("As senhas não correspondem");
+          return false;
+        }
     }
 
-    this.formValidate = false;
-    this.toastr.error("Senhas não correspondem");
-
-    return false;
+    return true;
   }
 
   get isValidform(): boolean {
     return this.formValidate;
   }
-
 }

@@ -1,15 +1,22 @@
 <div class="mat-app-background basic-container mat-elevation-z8">
 
-    <mat-card class="example-card">
-        <mat-card-header>
-            <mat-card-title>FORMULARIO DE EXECUÇÃO DE USUÁRIOS</mat-card-title>
-        </mat-card-header>
-    </mat-card>
+    <form #f="ngForm" (ngSubmit)="usersFiltering()" novalidate>
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>FORMULARIO DE EXECUÇÃO DE USUÁRIOS</mat-card-title>
+            </mat-card-header>
+        </mat-card>
 
-    <mat-form-field class='user-filter-style'>
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="usersFiltering($event)" placeholder="Ex. Joaquin Francisco ou 123">
-    </mat-form-field>      
+        <mat-form-field class='user-filter-style'>
+            <mat-label>Nome</mat-label>
+            <input matInput [(ngModel)]="filter.name" name="name">
+        </mat-form-field>
+
+        <button type="submit" mat-stroked-button color="basic">Encontrar</button>
+
+        <button type="button" (click)="openNewUserDialog()" mat-stroked-button color="primary">Novo usuário</button>
+    </form>
+
 
     <table mat-table [dataSource]="users">
         <ng-container matColumnDef="codigo">
@@ -27,10 +34,10 @@
             <td mat-cell *matCellDef="let element">{{ element.username }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="acao">  
+        <ng-container matColumnDef="acao">
             <th mat-header-cell *matHeaderCellDef> Ação </th>
 
-            <td mat-cell *matCellDef="let element" >
+            <td mat-cell *matCellDef="let element">
 
                 <button mat-raised-button (click)="openEditUserDialog(element)">
                     <mat-icon>edit</mat-icon>
@@ -49,10 +56,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
-    <mat-paginator 
-        [pageSize]="10" 
-        [length]=userResponse.count 
-        [pageSizeOptions]="[5, 10, 20]" 
+    <mat-paginator [pageSize]="10" [length]=userResponse.count [pageSizeOptions]="[5, 10, 20]"
         (page)="pageChanged($event)">
     </mat-paginator>
 

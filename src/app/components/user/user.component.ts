@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from './../../model/user';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
@@ -21,17 +21,17 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class UserComponent extends BaseComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
 
   private eventService: EventService;
-  public users: User[];
-  public userResponse: BasePaginatedResponse<User>;
-  public usuarioSelecionado: User;
-  private filter: UserFilter;
   private paginatorModel: Paginator;
   private listSub: Subscription;
 
+  public users: User[];
+  public userResponse: BasePaginatedResponse<User>;
+  public usuarioSelecionado: User;
+  public filter: UserFilter;
   public dataSource = new MatTableDataSource<User>();
   public loading: boolean;
   public noResults: boolean;
@@ -45,9 +45,9 @@ export class UserComponent extends BaseComponent implements OnInit {
   ];
 
   constructor(
-    private userService: UserService, 
+    private userService: UserService,
     public dialog: MatDialog
-  ) { 
+  ) {
     super();
   }
 
@@ -74,7 +74,7 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.users = new Array<User>();
     this.loading = true;
     this.listSub = this.userService.findAll(filter).subscribe((response) => {
-      if (response.results) {        
+      if (response.results) {
         this.userResponse = response;
         this.users = this.userResponse.results;
         this.dataSource.data = this.users;
@@ -111,18 +111,18 @@ export class UserComponent extends BaseComponent implements OnInit {
       this.paginatorModel.totalPages = Math.ceil(this.userResponse.count / limit);
       this.paginatorModel.next = this.userResponse.next;
       this.paginatorModel.previus = this.userResponse.previous;
-    } 
-    
+    }
+
   }
 
   openRemoveDialog(user: User): void {
     const dialogRef = this.dialog.open(RemoveComponent, {
       width: '250px',
-      data: {user: user}
+      data: { user: user }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.remover(result);
       }
     });
@@ -131,52 +131,63 @@ export class UserComponent extends BaseComponent implements OnInit {
   openEditUserDialog(user: User): void {
     const dialogRef = this.dialog.open(NewUserComponent, {
       width: '500px',
-      data: {user: user}
+      data: { user: user, update: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        this.update(result);
+      if (result) {
+        this.createOrUpdate(result);
       }
     });
   }
- 
+
+  openNewUserDialog(): void {
+    const dialogRef = this.dialog.open(NewUserComponent, {
+      width: '500px',
+      data: { update: false }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.createOrUpdate(result);
+    });
+  }
+
   remover(user: User) {
-    this.userService.delete(user.codigo).subscribe((response) =>  {
+    this.userService.delete(user.codigo).subscribe((response) => {
       this.getList();
       this.toastr.success('Usuário removido com sucesso.');
     }, err => {
-      this.openSnackBar( 'Error: Entre em contato com o suporte', 'OK');
+      this.openSnackBar('Error: Entre em contato com o suporte', 'OK');
       console.log(err);
     });
   }
 
-  clearFilter() { }
-  
-  update(user: User) {
-    this.userService.update(user).subscribe((response) =>  {
+  clearFilter() { 
+    this.filter = new UserFilter();
+  }
+
+  createOrUpdate(user: User) {
+    this.userService.createOrUpdate(user).subscribe((response) => {
       this.getList();
-      this.toastr.success('Usuário atualiado com sucesso.');
+      if(user.codigo) {
+        this.toastr.success('Usuário atualiado com sucesso.');
+      } else {
+        this.toastr.success('Usuário cadastrado com sucesso.');
+      }
     }, err => {
-      this.openSnackBar( 'Error: Entre em contato com o suporte', 'OK');
+      this.openSnackBar('Error: Entre em contato com o suporte', 'OK');
       console.log(err);
     });
   }
 
   pageChanged($evt) {
-    console.log($evt);
     this.filter.limit = $evt.pageSize;
     this.filter.page = $evt.pageIndex;
     this.getList(this.filter);
   }
 
-  usersFiltering(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    
-      this.filter.name = filterValue;
-      this.getList(this.filter);
-    
-    
+  usersFiltering() {
+    this.getList(this.filter);
   }
 
 }

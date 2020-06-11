@@ -9,7 +9,8 @@
         <mat-form-field class="user-full-width" appearance="outline">
             <mat-label>Nome</mat-label>
             <input id="input_name" 
-                disabled matInput 
+                disabled={{data.update}}
+                matInput 
                 name="name" 
                 [(ngModel)]="data.user.nome">
         </mat-form-field>
@@ -18,7 +19,7 @@
             <mat-label>Username</mat-label>
             <input id="input_username" 
                 name="username" 
-                disabled 
+                disabled={{data.update}} 
                 matInput 
                 [(ngModel)]="data.user.username" >
         </mat-form-field>
