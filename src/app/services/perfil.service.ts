@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Contagem } from '../model/contagem';
+import { Item } from '../model/item';
 import { delay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Perfil } from '../model/perfil';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ContagemService {
+export class PerfilService {
 
   constructor(private http: HttpClient) { }
 
-  findByIdInventario(id: number) {
-    return this.http.get<Contagem[]>(`${environment.API}/contagem/inventario/`+id)
+  findPerfil() {
+    return this.http.get<Perfil[]>(`${environment.API}/perfil/find-perfil`)
       .pipe(
         delay(1000),
         tap(console.log)
       );
-
   }
+
 }

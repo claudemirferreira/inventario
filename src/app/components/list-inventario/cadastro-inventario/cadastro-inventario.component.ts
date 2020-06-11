@@ -17,9 +17,6 @@ export class CadastroInventarioComponent implements OnInit {
   objeto: Inventario;
   public list = [];
 
-  @Input() message: string | null;
-  classCss: {};
-  //
   spinnerButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Salvar',
@@ -129,19 +126,17 @@ export class CadastroInventarioComponent implements OnInit {
   }
 
   save(): void {
-    this.message = '';
     if (this.objeto.id == 0)
       this.objeto.numeroContagem = '1';
     this.service.save(this.objeto).subscribe(
       (data: Inventario) => {
         this.objeto = data;
-        this.message = 'Operacao realizada com sucesso';
+        this.openSnackBar('Operação realizada com sucesso', 'OK');
         this.saveExecucao();
       },
       (err) => {
         console.log('erro de autenticação=' + JSON.stringify(err.status));
-        this.openSnackBar('Error: Entre em contato com o suporte', 'OK');
-        console.log(this.message);
+        this.openSnackBar('Error: '+ err.error.error, 'OK');
       }
     );
   }

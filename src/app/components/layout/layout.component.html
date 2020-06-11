@@ -9,13 +9,27 @@
   >
     <mat-toolbar>Menu </mat-toolbar>
     <mat-nav-list>
+<<<<<<< HEAD
       <a mat-list-item [routerLink]="['/list-inventario']">Inventário</a>
       <a mat-list-item [routerLink]="['/execucao']">Execução</a>
       <a mat-list-item [routerLink]="['/item']">Item</a>
       <a mat-list-item [routerLink]="['/contagem']">Contagem</a>
       <a mat-list-item [routerLink]="['/list-empresa']">Empresa</a>
       <a mat-list-item [routerLink]="['/usuario']">Usuários</a>
+=======
+
+>>>>>>> master
     </mat-nav-list>
+
+    <div class="flex-container" *ngFor="let perfil of shared.listPerfil" >
+
+
+      <div color="primary" class="perfil">{{perfil.nome}}</div>
+      <mat-nav-list *ngFor="let perfilRotina of perfil.perfilRotinas">
+        <a mat-list-item [routerLink]="perfilRotina.rotina.path">
+          <mat-icon>{{perfilRotina.rotina.icon}}</mat-icon>{{perfilRotina.rotina.nome}}</a>
+      </mat-nav-list>
+    </div>
   </mat-sidenav>
 
   <mat-sidenav-content>

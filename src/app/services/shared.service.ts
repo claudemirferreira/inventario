@@ -2,6 +2,7 @@ import { User } from '../model/user';
 
 import { Injectable, EventEmitter } from '@angular/core';
 import { CurrentUser } from '../model/current-user';
+import { Perfil } from '../model/perfil';
 
 @Injectable()
 export class SharedService {
@@ -9,6 +10,7 @@ export class SharedService {
   public static instance: SharedService = null;
   currentUser = new CurrentUser();
   showTemplate = new EventEmitter<boolean>();
+  listPerfil : Perfil[];
 
   constructor() {
     return SharedService.instance = SharedService.instance || this;
