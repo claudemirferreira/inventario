@@ -1,6 +1,12 @@
 import { SidenavService } from '../../services/sidenav.service';
 
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+  ElementRef,
+} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -10,6 +16,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { FormControl } from '@angular/forms';
 import { Router, NavigationEnd } from '@angular/router';
+import { PerfilService } from 'src/app/services/perfil.service';
 
 @Component({
   selector: 'app-layout',
@@ -36,10 +43,10 @@ export class LayoutComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private sidenavService: SidenavService,
+    private perfilService: PerfilService,
     private router: Router
   ) {
     this.shared = SharedService.getInstance();
-
   }
 
   ngOnInit() {
@@ -57,12 +64,11 @@ export class LayoutComponent implements OnInit {
     this.router.navigate(['/login']);
 
     console.log('/login------------------');
-
-
   }
 
   isLoggedIn(): boolean {
     return this.shared.isLoggedIn();
   }
+
 
 }

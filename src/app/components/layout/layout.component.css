@@ -24,3 +24,8 @@
 mat-toolbar {
 	width: 100%;
 }
+
+.perfil {
+  padding-left: 8px;
+  font-weight: bold;
+}

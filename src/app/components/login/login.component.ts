@@ -6,6 +6,8 @@ import { UserService } from 'src/app/services/user.service';
 import { CurrentUser } from '../../model/current-user';
 import { Erro } from '../../model/erro'
 import { Router } from '@angular/router';
+import { PerfilService } from 'src/app/services/perfil.service';
+import { Perfil } from 'src/app/model/perfil';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +25,7 @@ export class LoginComponent implements OnInit {
   erro: Erro;
 
   constructor(private userService: UserService,
+              private perfilService: PerfilService,
               private router: Router) {
     this.shared = new SharedService();
     this.shared.currentUser.token = null;
@@ -48,14 +51,28 @@ export class LoginComponent implements OnInit {
         this.shared.currentUser = userAuthentication;
         console.log('USUARIO='+JSON.stringify(this.shared.currentUser.token));
         this.shared.showTemplate.emit(true);
+        console.log('######lista perfillllll');
+        this.listarPerfilUsuario();
         this.router.navigate(['/home']);
     } , err => {
 
       console.log('erro de autenticação='+ JSON.stringify(err));
 
     });
-
   }
+
+  listarPerfilUsuario(): void {
+    this.message = null;
+    this.perfilService.findPerfil().subscribe((list: Perfil[]) => {
+      this.shared.listPerfil = list;
+      console.log('USUARIO='+JSON.stringify(list));
+      console.log('######lista perfillllll');
+  } , err => {
+
+    console.log('erro de autenticação='+ JSON.stringify(err));
+
+  });
+}
 
   cancelLogin(){
     this.message = '';
