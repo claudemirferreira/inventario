@@ -2,5 +2,5 @@ export const environment = {
 
   production: true,
   // incluir a url de producao
-  API : 'http://app-back:3000'
+  API : 'http://54.145.87.8:3000'
 };
