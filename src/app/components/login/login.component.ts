@@ -18,22 +18,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  shared: SharedService;
 
-  user = new Autentication();
-  shared : SharedService;
   @Input() message: string | null;
 
   erro: Erro;
+  user = new Autentication();
 
   constructor(private userService: UserService,
-              private perfilService: PerfilService,
-              private _snackBar: MatSnackBar,
-              private router: Router) {
+    private perfilService: PerfilService,
+    private _snackBar: MatSnackBar,
+    private router: Router) {
     this.shared = new SharedService();
     this.shared.currentUser.token = null;
     this.shared.currentUser.username = null;
     this.shared.showTemplate.emit(false);
-    console.log('entrou no login========')
   }
 
   ngOnInit() {
@@ -48,19 +47,16 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-      this.message = null;
-      this.userService.login(this.user).subscribe((userAuthentication: CurrentUser) => {
-        this.shared.currentUser = userAuthentication;
-        console.log('USUARIO='+JSON.stringify(this.shared.currentUser.token));
-        this.shared.showTemplate.emit(true);
-        console.log('######lista perfillllll');
-        this.listarPerfilUsuario();
-        this.router.navigate(['/home']);
-    } , err => {
-      this.openSnackBar( 'Alerta: '+ err.error.error, 'OK');
+    this.message = null;
+    this.userService.login(this.user).subscribe((userAuthentication: CurrentUser) => {
+      this.shared.currentUser = userAuthentication;
+      this.shared.showTemplate.emit(true);
 
-      console.log('erro de autenticação='+ JSON.stringify(err));
-
+      this.listarPerfilUsuario();
+      this.router.navigate(['/home']);
+    }, err => {
+      this.openSnackBar('Alerta: ' + err.error.error, 'OK');
+      console.log('erro de autenticação=' + JSON.stringify(err));
     });
   }
 
@@ -68,25 +64,23 @@ export class LoginComponent implements OnInit {
     this.message = null;
     this.perfilService.findPerfil().subscribe((list: Perfil[]) => {
       this.shared.listPerfil = list;
-      console.log('USUARIO='+JSON.stringify(list));
-      console.log('######lista perfillllll');
-  } , err => {
-    console.log('erro de autenticação='+ JSON.stringify(err));
-  });
-}
+    }, err => {
+      console.log('erro de autenticação=' + JSON.stringify(err));
+    });
+  }
 
-  cancelLogin(){
+  cancelLogin() {
     this.message = '';
     this.user = new Autentication();
     window.location.href = '/login';
     window.location.reload();
   }
 
-  getFormGroupClass(isInvalid: boolean, isDirty:boolean): {} {
+  getFormGroupClass(isInvalid: boolean, isDirty: boolean): {} {
     return {
       'form-group': true,
-      'has-error' : isInvalid  && isDirty,
-      'has-success' : !isInvalid  && isDirty
+      'has-error': isInvalid && isDirty,
+      'has-success': !isInvalid && isDirty
     };
   }
 
