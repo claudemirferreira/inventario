@@ -32,38 +32,47 @@ const routes: Routes = [
   {
     path: 'cadastro-inventario/:id',
     component: CadastroInventarioComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'cadastro-inventario',
     component: CadastroInventarioComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'item',
     component: ItemComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'contagem',
     component: ContagemComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'execucao',
     component: ExecucaoComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'cadastro-empresa',
     component: CadastroEmpresaComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'cadastro-empresa/:cnpj',
     component: CadastroEmpresaComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'list-empresa',
     component: ListEmpresaComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'usuario',
     component: UserComponent,
+    canActivate: [AuthGuard]
   },
 ];
 

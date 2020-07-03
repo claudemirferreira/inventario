@@ -34,7 +34,6 @@ export class UserService {
   }
 
   login(user: Autentication){
-    console.log(JSON.stringify(user));
     return this.http.post(`${environment.API}/user/authentication`,user);
   }
 

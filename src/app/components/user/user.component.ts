@@ -23,8 +23,6 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-
-  private eventService: EventService;
   private paginatorModel: Paginator;
   private listSub: Subscription;
 
@@ -46,7 +44,9 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private eventService: EventService,
+
   ) {
     super();
   }
