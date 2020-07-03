@@ -22,7 +22,8 @@ const routes: Routes = [
     component: LoginComponent },
   {
       path: 'home',
-      component: HomeComponent },
+      component: HomeComponent, 
+      canActivate: [AuthGuard] },
   {
     path: 'list-inventario',
     component: ListInventarioComponent,

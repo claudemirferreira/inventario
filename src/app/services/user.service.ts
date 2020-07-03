@@ -103,5 +103,9 @@ export class UserService {
     this.userDataervice.removeUserData();
   }
 
+  public isAuthenticated(): boolean {
+    const token = this.authTokenService.getToken();
+    return (token !== undefined && token != null);
+  }
 
 }

@@ -64,7 +64,6 @@ export class LayoutComponent implements OnInit {
   }
 
   isLoggedIn(): boolean {
-    console.log("Layout component isLogged: " + this.atuhTokenService.getToken())
     return this.atuhTokenService.getToken() == null ? false : true;
   }
 
