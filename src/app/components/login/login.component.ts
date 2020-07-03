@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { AuthTokenService } from './../../services/auth-token.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Autentication } from 'src/app/model/autentication';
@@ -19,6 +21,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   shared: SharedService;
+  currentUser: CurrentUser;
 
   @Input() message: string | null;
 
@@ -27,6 +30,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private userService: UserService,
     private perfilService: PerfilService,
+    private atuhTokenService: AuthTokenService,
+    private toastr: ToastrService,
     private _snackBar: MatSnackBar,
     private router: Router) {
     this.shared = new SharedService();
@@ -49,11 +54,17 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.message = null;
     this.userService.login(this.user).subscribe((userAuthentication: CurrentUser) => {
-      this.shared.currentUser = userAuthentication;
-      this.shared.showTemplate.emit(true);
+      if(!userAuthentication.token) {
+        this.toastr.error('Dados de acesso inválidos.');
+        console.log("Falha ao logar! ")
+      } else {
+        this.userService.saveUserData(userAuthentication);
+        this.currentUser = userAuthentication;
+        this.shared.showTemplate.emit(true);
 
-      this.listarPerfilUsuario();
-      this.router.navigate(['/home']);
+        this.listarPerfilUsuario();
+        window.location.reload();
+      }
     }, err => {
       this.openSnackBar('Alerta: ' + err.error.error, 'OK');
       console.log('erro de autenticação=' + JSON.stringify(err));
@@ -61,12 +72,14 @@ export class LoginComponent implements OnInit {
   }
 
   listarPerfilUsuario(): void {
-    this.message = null;
-    this.perfilService.findPerfil().subscribe((list: Perfil[]) => {
-      this.shared.listPerfil = list;
-    }, err => {
-      console.log('erro de autenticação=' + JSON.stringify(err));
-    });
+    if(this.currentUser) {
+      this.message = null;
+      this.perfilService.findPerfil().subscribe((list: Perfil[]) => {
+        this.userService.saveProfileList(list);
+      }, err => {
+        console.log('erro de autenticação=' + JSON.stringify(err));
+      });
+    }
   }
 
   cancelLogin() {

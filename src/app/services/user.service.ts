@@ -1,3 +1,8 @@
+import { Perfil } from './../model/perfil';
+import { StorageKey } from './../constants/storage-keys.constan';
+import { UserDataService } from './user-data.service';
+import { GenericStorageService } from './generic-storage.service';
+import { AuthTokenService } from './auth-token.service';
 import { UserFilter } from './../filters/user-filter';
 import { BasePaginatedResponse } from './../base/base-paginated.response';
 import { Injectable } from '@angular/core';
@@ -19,7 +24,12 @@ export class UserService {
   size :string;
   param = '';
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private authTokenService: AuthTokenService,
+    private userDataervice: UserDataService, 
+    private genericService: GenericStorageService
+  ) {
     this.serverUrl = `${environment.API}/user/`;
   }
 
@@ -77,6 +87,20 @@ export class UserService {
 
   alterarSenha(user: User){
     return this.http.put(`${environment.API}/user/alterar-senha`,user);
+  }
+
+  public saveUserData(data) {
+    this.authTokenService.setToken(data.token);
+    this.userDataervice.save(StorageKey.USER_DATA, data);
+  }
+
+  public saveProfileList(perfis: Perfil[]) {
+    this.userDataervice.setUserPrifle(perfis);
+  }
+
+  public logout() {
+    this.authTokenService.removeToken();
+    this.userDataervice.removeUserData();
   }
 
 

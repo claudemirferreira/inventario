@@ -8,9 +8,11 @@ import { Perfil } from '../model/perfil';
 export class SharedService {
 
   public static instance: SharedService = null;
-  currentUser = new CurrentUser();
+
   showTemplate = new EventEmitter<boolean>();
+
   listPerfil : Perfil[];
+  currentUser: CurrentUser;
 
   constructor() {
     return SharedService.instance = SharedService.instance || this;

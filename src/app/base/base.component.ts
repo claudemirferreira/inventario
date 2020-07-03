@@ -1,6 +1,6 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EventService } from './../services/event.service';
-import { GenericStorageService } from './../services/generic-storage.service';
+import { EventService } from '../services/event.service';
+import { GenericStorageService } from '../services/generic-storage.service';
 import { Router } from '@angular/router';
 import { DependencyInjector } from './dependency-injector';
 import { ViewChild, HostListener } from '@angular/core';

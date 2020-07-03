@@ -1,3 +1,4 @@
+import { AuthTokenService } from './../../services/auth-token.service';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { SharedService } from './../../services/shared.service';
@@ -6,17 +7,17 @@ import { HttpInterceptor, HttpHandler, HttpEvent, HttpRequest } from "@angular/c
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    shared : SharedService;
-    constructor() {
-          this.shared = SharedService.getInstance();
+    
+    constructor(private authTokenService: AuthTokenService) {
+          
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>  {
         let authRequest : any;
-        if(this.shared.isLoggedIn()){
+        if(this.authTokenService.getToken() !== undefined){
             authRequest = req.clone({
                 setHeaders: {
-                    'Authorization' : 'Bearer '+ this.shared.currentUser.token
+                    'Authorization' : 'Bearer '+ this.authTokenService.getToken()
                 }
             });
             return next.handle(authRequest);

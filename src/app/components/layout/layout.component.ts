@@ -1,22 +1,24 @@
-import { SidenavService } from '../../services/sidenav.service';
-
+import { User } from './../../model/user';
+import { CurrentUser } from './../../model/current-user';
+import { UserDataService } from './../../services/user-data.service';
+import { Perfil } from './../../model/perfil';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import {
   Component,
   OnInit,
   ViewChild,
-  ViewContainerRef,
-  ElementRef,
+  ViewContainerRef
 } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { SharedService } from 'src/app/services/shared.service';
-import { TooltipPosition } from '@angular/material/tooltip';
 import { FormControl } from '@angular/forms';
-import { Router, NavigationEnd } from '@angular/router';
-import { PerfilService } from 'src/app/services/perfil.service';
+import { MatSidenav } from '@angular/material/sidenav';
+import { TooltipPosition } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { UserService } from 'src/app/services/user.service';
+import { SidenavService } from '../../services/sidenav.service';
+import { AuthTokenService } from './../../services/auth-token.service';
+
 
 @Component({
   selector: 'app-layout',
@@ -31,43 +33,39 @@ export class LayoutComponent implements OnInit {
   @ViewChild('panel', { static: true })
   private sidePanel: MatSidenav;
 
-  public positionOptions: TooltipPosition[] = ['left']; // Tooltip postion
-  public position = new FormControl(this.positionOptions[0]);
-
   @ViewChild('content', { static: true, read: ViewContainerRef })
   private vcf: ViewContainerRef;
-  shared: SharedService;
 
-  mySubscription: any;
+  public positionOptions: TooltipPosition[] = ['left']; // Tooltip postion
+  public position = new FormControl(this.positionOptions[0]);
+  public perfis: Perfil[];
+  public currentUser: User;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private sidenavService: SidenavService,
-    private perfilService: PerfilService,
+    private userService: UserService,
+    private userDataService: UserDataService,
+    private atuhTokenService: AuthTokenService,
     private router: Router
   ) {
-    this.shared = SharedService.getInstance();
   }
 
   ngOnInit() {
     this.sidenavService.setPanel(this.sidePanel);
     this.sidenavService.setContentVcf(this.vcf);
+    this.perfis = this.userDataService.getUserProfile();    
+    this.currentUser = this.userDataService.getLoggedUser();
   }
 
   logout() {
-    console.log('entrou no logout');
-    this.router.navigate(['/login']);
-    this.shared.currentUser.token = null;
-    this.shared.currentUser.nome = '';
-    this.shared.currentUser.codigo = 0;
-    this.shared.currentUser.username = '';
-    this.router.navigate(['/login']);
-
-    console.log('/login------------------');
+    this.userService.logout();
+    window.location.reload();
   }
 
   isLoggedIn(): boolean {
-    return this.shared.isLoggedIn();
+    console.log("Layout component isLogged: " + this.atuhTokenService.getToken())
+    return this.atuhTokenService.getToken() == null ? false : true;
   }
 
 

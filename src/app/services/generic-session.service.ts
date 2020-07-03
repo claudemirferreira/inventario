@@ -1,25 +1,26 @@
+import { StorageKey } from './../constants/storage-keys.constan';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GenericStorageService {
+export class GenericSessionService {
 
   constructor() { }
 
   public save(storageKey, value) {
     const json = JSON.stringify(value);
-    localStorage.setItem(storageKey, json);
+    sessionStorage.setItem(storageKey, json);
   }
 
   public remove(storageKey) {
-    localStorage.removeItem(storageKey);
+    sessionStorage.removeItem(storageKey)
   }
 
   public get(storageKey): any {
-    const item = localStorage.getItem(storageKey);
+    const item = sessionStorage.getItem(storageKey);
     let parsed = null;
-    if (item && item !== 'undefined' && item != null) {
+    if(item !== undefined && item != null) {
       parsed = JSON.parse(item);
     }
     return parsed;

@@ -2,7 +2,7 @@ import { NewUserComponent } from './new-user/new-user.component';
 import { BasePaginatedResponse } from './../../base/base-paginated.response';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveComponent } from './../../base/dialog/remove/remove.component';
-import { BaseComponent } from './../../base/base..component';
+import { BaseComponent } from './../../base/base.component';
 import { Paginator } from './../../model/paginator.model';
 import { UserFilter } from './../../filters/user-filter';
 import { CustomEvents } from './../../constants/custom.events';
