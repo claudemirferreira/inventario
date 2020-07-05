@@ -2,9 +2,7 @@ import { StorageKey } from './../constants/storage-keys.constan';
 import { GenericStorageService } from './generic-storage.service';
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthTokenService extends GenericStorageService {
 
   constructor() { 
@@ -17,7 +15,7 @@ export class AuthTokenService extends GenericStorageService {
 
   public getToken(): string {
     let authToken: string;
-    
+
     try {
       authToken = this.get(StorageKey.AUTH_TOKEN);
     } finally {

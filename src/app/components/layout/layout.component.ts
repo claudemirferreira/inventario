@@ -1,5 +1,4 @@
 import { User } from './../../model/user';
-import { CurrentUser } from './../../model/current-user';
 import { UserDataService } from './../../services/user-data.service';
 import { Perfil } from './../../model/perfil';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -12,7 +11,6 @@ import {
 import { FormControl } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { TooltipPosition } from '@angular/material/tooltip';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
@@ -26,9 +24,8 @@ import { AuthTokenService } from './../../services/auth-token.service';
   styleUrls: ['./layout.component.css'],
 })
 export class LayoutComponent implements OnInit {
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(map((result) => result.matches));
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map((result) => result.matches));
 
   @ViewChild('panel', { static: true })
   private sidePanel: MatSidenav;
@@ -47,7 +44,6 @@ export class LayoutComponent implements OnInit {
     private userService: UserService,
     private userDataService: UserDataService,
     private atuhTokenService: AuthTokenService,
-    private router: Router
   ) {
   }
 
@@ -64,7 +60,8 @@ export class LayoutComponent implements OnInit {
   }
 
   isLoggedIn(): boolean {
-    return this.atuhTokenService.getToken() == null ? false : true;
+    this.currentUser = this.userDataService.getLoggedUser();
+    return this.currentUser == null ? false : true;
   }
 
 

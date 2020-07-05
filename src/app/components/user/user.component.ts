@@ -112,7 +112,6 @@ export class UserComponent extends BaseComponent implements OnInit {
       this.paginatorModel.next = this.userResponse.next;
       this.paginatorModel.previus = this.userResponse.previous;
     }
-
   }
 
   openRemoveDialog(user: User): void {

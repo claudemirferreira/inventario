@@ -9,7 +9,6 @@
       <mat-card-content>
         
         <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
-          <p *ngIf="message" class="error">{{ message }}</p>
           
           <div class="example-container">
             

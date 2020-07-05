@@ -29,3 +29,13 @@ mat-toolbar {
   padding-left: 8px;
   font-weight: bold;
 }
+
+
+mat-sidenav,
+mat-sidenav.md-locked-open-add-active,
+mat-sidenav.md-closed.md-locked-open-add-active,
+mat-sidenav.md-locked-open {
+	width: 200px;
+	min-width: 200px;
+	max-width: 200px;
+}

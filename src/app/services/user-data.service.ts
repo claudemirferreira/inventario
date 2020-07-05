@@ -4,9 +4,7 @@ import { StorageKey } from './../constants/storage-keys.constan';
 import { GenericSessionService } from './generic-session.service';
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UserDataService extends GenericSessionService {
 
   constructor() {
@@ -17,7 +15,7 @@ export class UserDataService extends GenericSessionService {
     this.save(StorageKey.USER_DATA, userData);
   }
 
-  public setUserPrifle(userProfile) {
+  public setUserProfile(userProfile) {
     this.save(StorageKey.USER_PROFILE, userProfile);
   }
 
@@ -25,13 +23,12 @@ export class UserDataService extends GenericSessionService {
     this.remove(StorageKey.USER_DATA);
   }
 
-
-  public removeUserProdile(): void {
+  public removeUserProfile(): void {
     this.remove(StorageKey.USER_PROFILE);
   }
 
   public isLoggedUser() {
-    return this.getLoggedUser();
+    return this.getLoggedUser() == null ? false : true;;
   }
 
   public getLoggedUser(): User {
@@ -54,7 +51,7 @@ export class UserDataService extends GenericSessionService {
       userProfiles = this.get(StorageKey.USER_PROFILE);
     } finally {
       if (!userProfiles) {
-        this.removeUserProdile();
+        this.removeUserProfile();
         userProfiles = null;
       }
     }

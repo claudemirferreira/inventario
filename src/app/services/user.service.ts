@@ -1,7 +1,6 @@
 import { Perfil } from './../model/perfil';
 import { StorageKey } from './../constants/storage-keys.constan';
 import { UserDataService } from './user-data.service';
-import { GenericStorageService } from './generic-storage.service';
 import { AuthTokenService } from './auth-token.service';
 import { UserFilter } from './../filters/user-filter';
 import { BasePaginatedResponse } from './../base/base-paginated.response';
@@ -13,9 +12,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { User } from '../model/user';
 import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UserService {
 
   protected serverUrl;
@@ -27,8 +24,7 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private authTokenService: AuthTokenService,
-    private userDataervice: UserDataService, 
-    private genericService: GenericStorageService
+    private userDataservice: UserDataService, 
   ) {
     this.serverUrl = `${environment.API}/user/`;
   }
@@ -61,7 +57,6 @@ export class UserService {
       });
     }
     return this.http.get<BasePaginatedResponse<User>>(this.serverUrl, {params});
-
   }
 
   findById(codigo:number){
@@ -89,17 +84,18 @@ export class UserService {
   }
 
   public saveUserData(data) {
+    this.userDataservice.save(StorageKey.USER_DATA, data);
     this.authTokenService.setToken(data.token);
-    this.userDataervice.save(StorageKey.USER_DATA, data);
   }
 
   public saveProfileList(perfis: Perfil[]) {
-    this.userDataervice.setUserPrifle(perfis);
+    this.userDataservice.setUserProfile(perfis);
   }
 
   public logout() {
     this.authTokenService.removeToken();
-    this.userDataervice.removeUserData();
+    this.userDataservice.removeUserData();
+    this.userDataservice.removeUserProfile();
   }
 
   public isAuthenticated(): boolean {

@@ -1,3 +1,7 @@
+import { UserDataService } from './services/user-data.service';
+import { AuthTokenService } from './services/auth-token.service';
+import { GenericStorageService } from './services/generic-storage.service';
+import { GenericSessionService } from './services/generic-session.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app/app.routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -21,7 +25,6 @@ import { ImportXlsComponent } from './components/list-inventario/import-xls/impo
 import { ItemComponent } from './components/item/item.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { UserService } from './services/user.service';
-import { SharedService } from './services/shared.service';
 import { AuthGuard } from './components/login/auth.guard';
 import { AuthInterceptor } from './components/login/AuthInterceptor';
 import { UserComponent } from './components/user/user.component';
@@ -66,8 +69,12 @@ import { NewUserComponent } from './components/user/new-user/new-user.component'
 
   ],
   providers: [UserService,
-    SharedService,
     AuthGuard,
+    GenericSessionService, 
+    GenericStorageService,
+    AuthTokenService,
+    UserService,
+    UserDataService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

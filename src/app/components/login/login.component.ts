@@ -1,9 +1,7 @@
 import { ToastrService } from 'ngx-toastr';
-import { AuthTokenService } from './../../services/auth-token.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Autentication } from 'src/app/model/autentication';
-import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
 import { CurrentUser } from '../../model/current-user';
 import { Erro } from '../../model/erro'
@@ -20,24 +18,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  shared: SharedService;
   currentUser: CurrentUser;
-
-  @Input() message: string | null;
 
   erro: Erro;
   user = new Autentication();
 
   constructor(private userService: UserService,
     private perfilService: PerfilService,
-    private atuhTokenService: AuthTokenService,
     private toastr: ToastrService,
     private _snackBar: MatSnackBar,
     private router: Router) {
-    this.shared = new SharedService();
-    this.shared.currentUser.token = null;
-    this.shared.currentUser.username = null;
-    this.shared.showTemplate.emit(false);
   }
 
   ngOnInit() {
@@ -50,6 +40,7 @@ export class LoginComponent implements OnInit {
   private redirectToHome() {
     this.router.navigate(['home']);
   }
+
   createForm() {
     this.loginForm = new FormGroup({
       login: new FormControl('', [Validators.required]),
@@ -58,7 +49,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.message = null;
     this.userService.login(this.user).subscribe((userAuthentication: CurrentUser) => {
       if(!userAuthentication.token) {
         this.toastr.error('Dados de acesso inválidos.');
@@ -66,10 +56,7 @@ export class LoginComponent implements OnInit {
       } else {
         this.userService.saveUserData(userAuthentication);
         this.currentUser = userAuthentication;
-        this.shared.showTemplate.emit(true);
-
         this.listarPerfilUsuario();
-        window.location.reload();
       }
     }, err => {
       this.openSnackBar('Alerta: ' + err.error.error, 'OK');
@@ -79,9 +66,9 @@ export class LoginComponent implements OnInit {
 
   listarPerfilUsuario(): void {
     if(this.currentUser) {
-      this.message = null;
       this.perfilService.findPerfil().subscribe((list: Perfil[]) => {
         this.userService.saveProfileList(list);
+        window.location.reload();
       }, err => {
         console.log('erro de autenticação=' + JSON.stringify(err));
       });
@@ -89,7 +76,6 @@ export class LoginComponent implements OnInit {
   }
 
   cancelLogin() {
-    this.message = '';
     this.user = new Autentication();
     window.location.href = '/login';
     window.location.reload();
