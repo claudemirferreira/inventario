@@ -1,6 +1,4 @@
-import { User } from './../../../model/user';
-import { BaseComponent } from './../../base..component';
-import { UserComponent } from './../../../components/user/user.component';
+import { BaseComponent } from './../../base.component';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 

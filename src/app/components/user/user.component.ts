@@ -2,7 +2,7 @@ import { NewUserComponent } from './new-user/new-user.component';
 import { BasePaginatedResponse } from './../../base/base-paginated.response';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveComponent } from './../../base/dialog/remove/remove.component';
-import { BaseComponent } from './../../base/base..component';
+import { BaseComponent } from './../../base/base.component';
 import { Paginator } from './../../model/paginator.model';
 import { UserFilter } from './../../filters/user-filter';
 import { CustomEvents } from './../../constants/custom.events';
@@ -23,8 +23,6 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-
-  private eventService: EventService;
   private paginatorModel: Paginator;
   private listSub: Subscription;
 
@@ -46,7 +44,9 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private eventService: EventService,
+
   ) {
     super();
   }
@@ -112,7 +112,6 @@ export class UserComponent extends BaseComponent implements OnInit {
       this.paginatorModel.next = this.userResponse.next;
       this.paginatorModel.previus = this.userResponse.previous;
     }
-
   }
 
   openRemoveDialog(user: User): void {

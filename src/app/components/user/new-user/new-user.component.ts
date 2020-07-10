@@ -1,7 +1,7 @@
 import { ToastrService } from 'ngx-toastr';
 import { User } from './../../../model/user';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BaseComponent } from './../../../base/base..component';
+import { BaseComponent } from '../../../base/base.component';
 import { Component, OnInit, Inject } from '@angular/core';
 import { throwIfEmpty } from 'rxjs/operators';
 

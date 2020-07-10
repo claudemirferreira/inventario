@@ -13,11 +13,7 @@ export class PerfilService {
   constructor(private http: HttpClient) { }
 
   findPerfil() {
-    return this.http.get<Perfil[]>(`${environment.API}/perfil/find-perfil`)
-      .pipe(
-        delay(1000),
-        tap(console.log)
-      );
+    return this.http.get<Perfil[]>(`${environment.API}/perfil/find-perfil`);
   }
 
 }
