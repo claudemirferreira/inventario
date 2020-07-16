@@ -1,9 +1,9 @@
-<section class="container flex center">
-  <div >
+<section class="login-section container flex center">
+  <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center" >
     <mat-card>
 
       <mat-card-header>
-        <mat-card-subtitle>Sistema de Controle de Inventário</mat-card-subtitle>
+        <mat-card-subtitle>Inventário Online</mat-card-subtitle>
       </mat-card-header>
 
       <mat-card-content>
@@ -28,24 +28,40 @@
                 type="password" 
                 placeholder="Password"
                 formControlName="password" />
-            </mat-form-field>
+            </mat-form-field>            
+
           </div>
+
+          <mat-card-actions>
+            <button 
+              mat-stroked-button 
+              (click)="login()" 
+              color="primary"
+              class="btn-block"
+              [disabled]="!loginForm.valid || loading"
+              >
+              
+              <mat-icon *ngIf=!loading>
+                <span>perm_identity</span>
+              </mat-icon>
+    
+              <mat-icon *ngIf=loading>
+                <mat-spinner diameter="20"></mat-spinner>
+              </mat-icon>
+    
+              Logar
+            </button>
+    
+            
+    
+          </mat-card-actions>
+    
 
         </form>
 
       </mat-card-content>
 
-      <mat-card-actions>
-        <button 
-          mat-raised-button 
-          (click)="login()" 
-          color="primary"
-          [disabled]="!loginForm.valid">
-          <mat-icon>check</mat-icon>Logar
-        </button>
-
-      </mat-card-actions>
-
+      
     </mat-card>
 
   </div>

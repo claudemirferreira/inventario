@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   currentUser: CurrentUser;
 
   erro: Erro;
+  loading: Boolean;
   user = new Autentication();
 
   constructor(private userService: UserService,
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.loading = false;
     if(this.userService.isAuthenticated()) {
       this.redirectToHome();
     }
@@ -49,6 +51,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
+    this.loading = true;
     this.userService.login(this.user).subscribe((userAuthentication: CurrentUser) => {
       if(!userAuthentication.token) {
         this.toastr.error('Dados de acesso inválidos.');
@@ -61,6 +64,7 @@ export class LoginComponent implements OnInit {
     }, err => {
       this.openSnackBar('Alerta: ' + err.error.error, 'OK');
       console.log('erro de autenticação=' + JSON.stringify(err));
+      this.loading = false;
     });
   }
 
