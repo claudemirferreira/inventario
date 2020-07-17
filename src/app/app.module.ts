@@ -32,6 +32,8 @@ import { RemoveComponent } from './base/dialog/remove/remove.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ToastrModule } from 'ngx-toastr';
 import { NewUserComponent } from './components/user/new-user/new-user.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import { NewUserComponent } from './components/user/new-user/new-user.component'
     ReactiveFormsModule,
     FlexLayoutModule,
     MatPaginatorModule,
+    NgxMaskModule.forRoot(),
     ToastrModule.forRoot({
       preventDuplicates: true,
       enableHtml: true

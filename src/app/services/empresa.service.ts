@@ -1,4 +1,5 @@
-import { HttpClient } from '@angular/common/http';
+import { EmpresaFilter } from './../filters/empresa-filter';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Empresa } from '../model/empresa';
 import { environment } from 'src/environments/environment';
@@ -14,8 +15,11 @@ export class EmpresaService {
     return this.http.get(`${environment.API}/empresa`);
   }
 
-  find(objeto: Empresa) {
-    return this.http.post(`${environment.API}/empresa/find`, objeto);
+  find(objeto: EmpresaFilter) {
+    let query = new HttpParams()
+      .set('cnpj', objeto.cnpj)
+      .set('nome', objeto.nome);
+    return this.http.get(`${environment.API}/empresa`, {params:query});
   }
 
   save(objeto: Empresa) {
