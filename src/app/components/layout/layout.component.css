@@ -30,6 +30,10 @@ mat-toolbar {
   font-weight: bold;
 }
 
+.mat-toolbar.mat-primary {
+	background: #f5f5f5; 
+    color: #000000;
+}
 
 mat-sidenav,
 mat-sidenav.md-locked-open-add-active,
