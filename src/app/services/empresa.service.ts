@@ -12,18 +12,22 @@ export class EmpresaService {
   constructor(private http: HttpClient) { }
 
   findAll() {
-    return this.http.get(`${environment.API}/empresa`);
+    return this.http.get(`${environment.API}/empresa/find`);
   }
 
   find(objeto: EmpresaFilter) {
     let query = new HttpParams()
       .set('cnpj', objeto.cnpj)
       .set('nome', objeto.nome);
-    return this.http.get(`${environment.API}/empresa`, {params:query});
+    return this.http.get(`${environment.API}/empresa/find`, {params:query});
   }
 
   save(objeto: Empresa) {
     return this.http.post(`${environment.API}/empresa`, objeto);
+  }
+
+  update(objeto: Empresa) {
+    return this.http.put(`${environment.API}/empresa`, objeto);
   }
 
   findById(cnpj: string) {

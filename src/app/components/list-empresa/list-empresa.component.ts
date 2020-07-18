@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { EmpresaFilter } from './../../filters/empresa-filter';
 import { Component, OnInit } from '@angular/core';
 import { Empresa } from 'src/app/model/empresa';
@@ -25,8 +26,9 @@ export class ListEmpresaComponent implements OnInit {
     'acao',
   ];
 
-  constructor(private service: EmpresaService
-    , private _snackBar: MatSnackBar,
+  constructor(
+    private service: EmpresaService,
+    private toastr: ToastrService,
     public dialog: MatDialog) {
 
   }
@@ -52,11 +54,9 @@ export class ListEmpresaComponent implements OnInit {
     this.service.delete(empresa.cnpj).subscribe((responseApi: any) => {
       console.log(responseApi);
       this.find();
-      this.openSnackBar('Operação realizada com sucesso', 'OK');
-
+      this.toastr.success('Operação realizada com sucesso');
     }, err => {
-      this.openSnackBar('Error: Entre em contato com o suporte', 'OK');
-      console.log(err);
+      this.toastr.error(err.error.message, "Erro ao remover a empresa");
     });
   }
 
@@ -65,17 +65,10 @@ export class ListEmpresaComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if (result == "true") {
-        console.log("excluir");
         this.delete(empresa);
       } else {
         console.log("cancelar");
       }
-    });
-  }
-
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 2000,
     });
   }
 

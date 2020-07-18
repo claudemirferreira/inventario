@@ -20,7 +20,15 @@ button {
 .field-full-width {
     width: 100%;
 }
+
+.field-medium-width {
+    width: 50%;
+}
   
-.field-litle-width {
-    width: 120px;
+.field-number-width {
+    width: 15%;
+}
+
+.field-short-text-width {
+    width: 30%;
 }
