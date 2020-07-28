@@ -1,3 +1,4 @@
+import { Perfil } from './perfil';
 import { Empresa } from './empresa';
 
 export class User {
@@ -13,6 +14,8 @@ export class User {
   active: Boolean;
 
   empresa: Empresa;
+
+  perfis: Perfil[];
 
   count: number;
 

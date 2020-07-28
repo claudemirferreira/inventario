@@ -48,7 +48,6 @@ export class CadastroEmpresaComponent implements OnInit {
       } else {
         this.service.findById(cnpj).subscribe(
           (empresa: Empresa) => {
-
             this.objeto = empresa;
             this.isReadonly = true;
           },

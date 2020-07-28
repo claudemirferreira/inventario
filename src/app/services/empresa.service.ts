@@ -1,3 +1,4 @@
+import { BasePaginatedResponse } from './../base/base-paginated.response';
 import { EmpresaFilter } from './../filters/empresa-filter';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -12,7 +13,7 @@ export class EmpresaService {
   constructor(private http: HttpClient) { }
 
   findAll() {
-    return this.http.get(`${environment.API}/empresa/find`);
+    return this.http.get<Empresa[]>(`${environment.API}/empresa/find`);
   }
 
   find(objeto: EmpresaFilter) {

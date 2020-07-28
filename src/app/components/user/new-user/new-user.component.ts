@@ -1,9 +1,13 @@
-import { ToastrService } from 'ngx-toastr';
-import { User } from './../../../model/user';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
+import { Empresa } from 'src/app/model/empresa';
 import { BaseComponent } from '../../../base/base.component';
-import { Component, OnInit, Inject } from '@angular/core';
-import { throwIfEmpty } from 'rxjs/operators';
+import { Perfil } from './../../../model/perfil';
+import { User } from './../../../model/user';
+import { EmpresaService } from './../../../services/empresa.service';
+import { PerfilService } from './../../../services/perfil.service';
+import { UserDataService } from './../../../services/user-data.service';
 
 @Component({
   selector: 'app-new-user',
@@ -17,10 +21,18 @@ export class NewUserComponent<T extends BaseComponent> implements OnInit {
   public password: string;
   public passwordConfirmation: string;
   public formValidate: boolean;
+  public perfis: Perfil[];
+  public empresas: Empresa[];
+
+  public selected: [];
+  public empresaSelected: String;
 
   constructor(
     public dialogRef: MatDialogRef<T>, 
     private toastr: ToastrService,
+    private perfilService: PerfilService,
+    private userDataService: UserDataService,
+    private empresaService: EmpresaService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
@@ -29,6 +41,16 @@ export class NewUserComponent<T extends BaseComponent> implements OnInit {
     this.password = "";
     this.formValidate = true;
     this.toastr.clear();
+    this.listProfiles();
+    this.afterRender();
+    this.listarEmpresas();
+  }
+
+  afterRender() {
+    if(this.data.user.codigo) {
+      this.selected = this.data.user.perfis.map( ({id}) => id );
+      this.empresaSelected = this.data.user.empresa.cnpj;
+    }
   }
 
   onNoClick(): void {
@@ -38,8 +60,22 @@ export class NewUserComponent<T extends BaseComponent> implements OnInit {
   onSaveClick(): void {
     if(this.validate()) {
       this.data.user.password = this.password;
+      this.data.user.perfis = this.selected;
+      this.data.user.empresa = this.isAdmin ? this.empresaSelecionada : this.userDataService.getLoggedUser().empresa;      
       this.dialogRef.close(this.data.user);
     } 
+  }
+
+  listProfiles() {
+    this.perfilService.findPerfil().subscribe((response) => {
+      this.perfis = response;
+    });
+  }
+
+  listarEmpresas() {
+    this.empresaService.findAll().subscribe((response) => {
+      this.empresas = response;
+    });
   }
 
   get isNeedsToConfirmPassword() {
@@ -74,7 +110,30 @@ export class NewUserComponent<T extends BaseComponent> implements OnInit {
     return true;
   }
 
+  get empresaSelecionada(): Empresa {
+    const empresa = this.empresas.filter(e => {
+      if(e.cnpj === this.empresaSelected) {
+        return true;
+      }
+
+      return false;
+    })[0];
+    return empresa;
+  }
+
   get isValidform(): boolean {
     return this.formValidate;
+  }
+
+  get isAdmin(): boolean {
+    let user: User = this.userDataService.getLoggedUser();    
+    const profile = user.perfis.filter(p => {
+      if(p.id == 1) {
+        return true;
+      }
+      return false;
+    });
+    
+    return profile.length > 0 ? true : false; 
   }
 }
