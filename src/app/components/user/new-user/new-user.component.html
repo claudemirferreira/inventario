@@ -1,11 +1,25 @@
 <h1 mat-dialog-title>Editar</h1>
 
 
-<form class="user-form" #f="ngForm" > 
+<form class="user-form" #f="ngForm">  
 
     <div mat-dialog-content>
         <p>{{data.nome}}</p>
         
+        <mat-form-field appearance="fill" class="user-full-width">
+            <mat-label>Perfil</mat-label>
+            <mat-select name="perfil" multiple [(ngModel)]="selected" >
+              <mat-option *ngFor="let perfil of perfis" [value]=perfil.id>{{perfil.nome}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="isAdmin" appearance="fill" class="user-full-width">
+            <mat-label>Empresa</mat-label>
+            <mat-select name="empresaSelected" [(ngModel)]="empresaSelected">
+              <mat-option *ngFor="let empresa of empresas" [value]=empresa.cnpj>{{empresa.nome}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
         <mat-form-field class="user-full-width" appearance="outline">
             <mat-label>Nome</mat-label>
             <input id="input_name" 
@@ -21,7 +35,9 @@
                 name="username" 
                 disabled={{data.update}} 
                 matInput 
-                [(ngModel)]="data.user.username" >
+                [(ngModel)]="data.user.username" 
+                autocomplete="off" 
+                autocomplete="off" >
         </mat-form-field>
 
         <mat-form-field class="user-full-width" appearance="outline">
@@ -31,7 +47,8 @@
                 name="password" 
                 matInput 
                 [(ngModel)]="password"  
-                [type]="hide ? 'password' : 'text'">
+                [type]="hide ? 'password' : 'text'" 
+                autocomplete="off" >
             <button 
                 mat-icon-button 
                 matSuffix 
@@ -49,7 +66,8 @@
                 name="passwordConfirmation"
                 matInput 
                 [(ngModel)]="passwordConfirmation" 
-                [type]="hide ? 'password' : 'text'">
+                [type]="hide ? 'password' : 'text'"
+                autocomplete="off" >
             <mat-hint>Errors appear instantly!</mat-hint>
         </mat-form-field>
 

@@ -1,32 +1,31 @@
 <div class="mat-app-background basic-container">
 
-    <mat-card class="example-card">
-        <mat-card-header>
-            <mat-card-title>FORMULÁRIO DE PESQUISA DE EMPRESA</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
+    <form (ngSubmit)="find()" novalidate>
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>FORMULÁRIO DE PESQUISA DE EMPRESA</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field appearance="legacy" class="field-litle-width">
+                    <mat-label>Cnpj</mat-label>
+                    <input mask="00-000-000/0000-00" matInput name="cnpj" placeholder="cnpj do empresa" [(ngModel)]="filter.cnpj" maxlength="18">
+                </mat-form-field>
 
-            <mat-form-field appearance="legacy" class="field-litle-width">
-                <mat-label>Cnpj</mat-label>
-                <input matInput placeholder="cnpj do empresa" [(ngModel)]="objeto.cnpj" maxlength="14">
-            </mat-form-field>
+                <mat-form-field appearance="legacy" class="field-form">
+                    <mat-label>Nome</mat-label>
+                    <input matInput name="nome" placeholder="nome do empresa" [(ngModel)]="filter.nome">
+                </mat-form-field>
+            </mat-card-content>
 
-            <mat-form-field appearance="legacy" class="field-form">
-                <mat-label>Nome</mat-label>
-                <input matInput placeholder="nome do empresa" [(ngModel)]="objeto.nome">
-            </mat-form-field>
+            <mat-card-actions>
+                <button mat-raised-button type="submit">
+                    <i class="material-icons">search</i>Pesquisar</button>
 
-        </mat-card-content>
-        <mat-card-actions>
-
-            <button mat-raised-button (click)="find()">
-                <i class="material-icons">search</i>Pesquisar</button>
-
-            <button mat-raised-button routerLink="/cadastro-empresa">
-                <i class="material-icons">add_circle_outline</i>Novo</button>
-
-        </mat-card-actions>
-    </mat-card>
+                <button mat-raised-button routerLink="/cadastro-empresa">
+                    <i class="material-icons">add_circle_outline</i>Novo</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
 
     <table mat-table [dataSource]="list" class="mat-elevation-z8">
         <ng-container matColumnDef="cnpj">

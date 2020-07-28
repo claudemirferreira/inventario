@@ -1,11 +1,13 @@
+import { element } from 'protractor';
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
-import { Empresa } from 'src/app/model/empresa';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { EmpresaService } from 'src/app/services/empresa.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DialogMensagemComponent } from '../../share/dialog-mensagem/dialog-mensagem.component';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
+import { Empresa } from 'src/app/model/empresa';
+import { EmpresaService } from 'src/app/services/empresa.service';
+
 
 @Component({
   selector: 'app-cadastro-empresa',
@@ -15,24 +17,30 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CadastroEmpresaComponent implements OnInit {
 
   objeto: Empresa;
-
   formGroup: FormGroup;
-
   isReadonly = false;
   submitted = false;
+  loading: Boolean;
 
   constructor(
     private service: EmpresaService,
     private formBuilder: FormBuilder,
-    private router: Router,
     private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private toastr: ToastrService,
     private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
     this.createForm();
+    this.toastr.clear();
+    this.loading = false;
     this.objeto = new Empresa();
-    var cnpj = this.route.params.subscribe((params) => {
+    this.loadCompanyData()
+  }
+
+  loadCompanyData() {
+    this.route.params.subscribe((params) => {
       var cnpj = params['cnpj'];
       console.log(cnpj);
       if (!cnpj) {
@@ -42,10 +50,10 @@ export class CadastroEmpresaComponent implements OnInit {
           (empresa: Empresa) => {
             this.objeto = empresa;
             this.isReadonly = true;
-            console.log(JSON.stringify(this.objeto));
           },
           (err) => {
             console.log('ocorreu um erro');
+            this.toastr.error("Erro ao obter dados da empresa");
           }
         );
       }
@@ -77,26 +85,36 @@ export class CadastroEmpresaComponent implements OnInit {
     };
   }
 
-  save(): void {
-    console.log(JSON.stringify(this.objeto));
-
+  save(formDirective: FormGroupDirective): void {
     this.submitted = true;
+    this.loading = true
 
-    // stop here if form is invalid
     if (this.formGroup.invalid) {
-        return;
+      return;
     }
-    this.service.save(this.objeto).subscribe(
-      (data: Empresa) => {
-        this.objeto = data;
-        this.isReadonly = true;
-        this.openSnackBar('Operação realizada com sucesso', 'OK');
-      },
-      (err) => {
-        console.log('erro de autenticação=' + JSON.stringify(err.status));
-        this.openSnackBar('Error: Entre em contato com o suporte', 'OK');
-      }
-    );
+
+    if (this.isCnpjValid(this.objeto.cnpj)) {
+
+      let service = this.isReadonly ? this.service.update(this.objeto) : this.service.save(this.objeto); 
+
+      service.subscribe(
+        (data: Empresa) => {
+          this.toastr.success("Operação realizada com sucesso");
+          this.onReset(formDirective);
+          this.isReadonly = false;
+          this.loading = false;
+        },
+        (err) => {
+          console.log(err.error.message);
+          this.toastr.error(err.error.message, "Erro ao salvar a empresa");
+          this.isReadonly = false;
+        }
+      );
+    } else {
+      this.toastr.error("Error: CNPJ é invalido");
+      this.formGroup.get('cnpj').setErrors({'incorrect': true});
+      this.loading = false;
+    }
   }
 
   openSnackBar(message: string, action: string) {
@@ -105,9 +123,76 @@ export class CadastroEmpresaComponent implements OnInit {
     });
   }
 
-  onReset() {
+  onReset(formDirective: FormGroupDirective) {
     this.submitted = false;
     this.formGroup.reset();
+    formDirective.resetForm();
+  }
+
+  /**
+   * Rules geted from 
+   * https://github.com/alvaropaco/ng-cpf-cnpj-validate
+   * 
+   * @param cnpj 
+   */
+  private isCnpjValid(cnpj: string): boolean {
+    var tamanho;
+    var numeros;
+    var digitos;
+    var soma;
+    var pos;
+    var resultado;
+    var i;
+
+    if (cnpj == '')
+      return false;
+
+    if (cnpj.length != 14)
+      return false;
+
+    // Regex to validate strings with 14 same characters
+    var regex = /([0]{14}|[1]{14}|[2]{14}|[3]{14}|[4]{14}|[5]{14}|[6]{14}|[7]{14}|[8]{14}|[9]{14})/g
+
+    // Regex builder
+    var patt = new RegExp(regex);
+    if (patt.test(cnpj))
+      return false;
+
+    // Valida DVs
+    tamanho = cnpj.length - 2
+    numeros = cnpj.substring(0, tamanho);
+    digitos = cnpj.substring(tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+
+    for (i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2)
+        pos = 9;
+    }
+
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+
+    if (resultado != digitos.charAt(0))
+      return false;
+
+    tamanho = tamanho + 1;
+    numeros = cnpj.substring(0, tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+
+    for (i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2)
+        pos = 9;
+    }
+
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+
+    if (resultado != digitos.charAt(1))
+      return false;
+
+    return true;
   }
 
 }

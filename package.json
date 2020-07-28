@@ -25,6 +25,7 @@
     "@angular/router": "~9.1.0",
     "express": "^4.17.1",
     "mat-progress-buttons": "^9.1.1",
+    "ngx-mask": "^9.1.2",
     "ngx-toastr": "^12.1.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

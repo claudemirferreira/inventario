@@ -1,83 +1,106 @@
 <section class="container flex flex-wrap center">
   <div class="flex-container">
     <mat-card class="example-card">
-      <form [formGroup]="formGroup" (ngSubmit)="save()">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Cadastro de Empresa</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
+      <form [formGroup]="formGroup" #formDirective="ngForm"  (ngSubmit)="save(formDirective)">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>Cadastro de Empresa</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
 
-          <mat-form-field class="field-litle-width">
-            <input [(ngModel)]="objeto.cnpj" [readonly]="isReadonly" maxlength="14" minlength="14" matInput placeholder="CNPJ"
-              formControlName="cnpj" />
+          <p>
+            <mat-form-field appearance="outline" class="field-number-width">
+              <mat-label>CNPJ</mat-label>
 
-            <mat-error *ngIf="
-                  !formGroup.controls['cnpj'].valid &&
-                  formGroup.controls['cnpj'].touched
+              <input [(ngModel)]="objeto.cnpj" [readonly]="isReadonly" maxlength="18" mask="00-000-000/0000-00" matInput
+                formControlName="cnpj"/>
+
+              <mat-error *ngIf="
+                  !formGroup.controls['cnpj'].valid && 
+                  formGroup.controls['cnpj'].touched && 
+                  formGroup.controls['cnpj'].value == ''
                 ">
-              CNPJ é obrigatório.
-            </mat-error>
-          </mat-form-field>
+                CNPJ é obrigatório.
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="field-form">
-            <input [(ngModel)]="objeto.nome" maxlength="100" matInput placeholder="Nome" formControlName="nome" />
+            <mat-form-field appearance="outline" class="field-short-text-width">
+              <mat-label>Nome</mat-label>
+              <input [(ngModel)]="objeto.nome" maxlength="100" matInput formControlName="nome" />
 
-            <mat-error *ngIf="
+              <mat-error *ngIf="
                   !formGroup.controls['nome'].valid &&
                   formGroup.controls['nome'].touched
                 ">
-              nome obrigatório.
-            </mat-error>
-          </mat-form-field>
+                nome obrigatório.
+              </mat-error>
+            </mat-form-field>
+          </p>
 
-          <mat-form-field class="field-litle-width">
-            <input [(ngModel)]="objeto.telefone" maxlength="30" matInput placeholder="Telefone" formControlName="telefone" />
+          <p>
+            <mat-form-field appearance="outline" class="field-number-width">
+              <mat-label>Telefone</mat-label>
+              <input [(ngModel)]="objeto.telefone" name="telefone" maxlength="15" matInput mask="(00) 00000-0000"
+                formControlName="telefone" />
 
-            <mat-error *ngIf="
+              <mat-error *ngIf="
                   !formGroup.controls['telefone'].valid &&
                   formGroup.controls['telefone'].touched
                 ">
-              telefone obrigatório.
-            </mat-error>
-          </mat-form-field>
+                telefone obrigatório.
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="field-short-text-width">
+              <mat-label>E-mail</mat-label>
+              <input [(ngModel)]="objeto.email" maxlength="100" type="email" matInput name="email"
+                formControlName="email" />
+              
+              <mat-error *ngIf="!formGroup.controls['email'].valid && formGroup.controls['email'].touched">
+                Email invalido.
+              </mat-error>
 
-          <mat-form-field class="field-form">
-            <input [(ngModel)]="objeto.email" maxlength="100" email="true" type="email" matInput placeholder="Email" formControlName="email" />
+            </mat-form-field>
+          </p>
 
-            <mat-error *ngIf="f.email.errors.required">
-              nome obrigatório.
-            </mat-error>
+          <p>
+            <mat-form-field appearance="outline" class="field-medium-width">
+              <mat-label>Endereço</mat-label>
+              <input [(ngModel)]="objeto.endereco" class="field-full-width" maxlength="100" matInput formControlName="endereco" />
 
-            <mat-error *ngIf="f.email.errors.email">
-              e-mail invalido.
-            </mat-error>
-        
-          </mat-form-field>
-
-          <mat-form-field class="field-form">
-            <input [(ngModel)]="objeto.endereco" maxlength="100" matInput placeholder="Endereço" formControlName="endereco" />
-
-            <mat-error *ngIf="
+              <mat-error *ngIf="
                   !formGroup.controls['endereco'].valid &&
                   formGroup.controls['endereco'].touched
                 ">
-              endereço obrigatório.
-            </mat-error>
-          </mat-form-field>
-      </mat-card-content>
+                endereço obrigatório.
+              </mat-error>
+            </mat-form-field>
+          </p>
+        </mat-card-content>
 
-      <mat-card-actions>
-        <button mat-raised-button routerLink="/list-empresa">
-          <i class="material-icons">undo</i>Voltar
-        </button>
 
-        <button mat-raised-button type="submit">
-          <i class="material-icons">save</i>Voltar
-        </button>
-      </mat-card-actions>
+        <mat-card-actions>
+          <button 
+            mat-raised-button 
+            routerLink="/list-empresa">
+            <i class="material-icons">undo</i>Voltar
+          </button>
 
-    </form>
+          <button [disabled]="!formGroup.valid || loading" mat-raised-button color="primary" type="submit">
+            Salvar
+
+            <mat-icon *ngIf=!loading>
+              <span>save</span>
+            </mat-icon>
+  
+            <mat-icon *ngIf=loading>
+              <mat-spinner diameter="20"></mat-spinner>
+            </mat-icon>
+
+          </button>
+        </mat-card-actions>
+
+      </form>
     </mat-card>
   </div>
 </section>
